@@ -1,0 +1,248 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="MilitaryTypography.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="MilitaryRadioButton"
+           TargetType="RadioButton">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Canvas Grid.Column="0"
+                                    Width="24"
+                                    Height="24"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <Ellipse x:Name="Outline"
+                                         Width="20"
+                                         Height="20"
+                                         Canvas.Left="2"
+                                         Canvas.Top="2"
+                                         StrokeThickness="1"
+                                         Stroke="{StaticResource Brush_RadioButtonStrokeEnabled}"
+                                         Fill="{StaticResource Brush_RadioButtonEnabled}"/>
+                                <Ellipse x:Name="Checker"
+                                         Width="8"
+                                         Height="8"
+                                         Canvas.Left="8"
+                                         Canvas.Top="8"
+                                         StrokeThickness="0"
+                                         Fill="{StaticResource Brush_RadioButtonCheckerEnabled}"
+                                         Visibility="Collapsed"/>
+                            </Canvas>
+
+                            <TextBlock Style="{StaticResource TextBlock_Component_M}"
+                                       Grid.Column="1"
+                                       Padding="{TemplateBinding Padding}"
+                                       Text="{TemplateBinding Content}"
+                                       VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter TargetName="Outline"
+                                        Property="Stroke"
+                                        Value="{StaticResource Brush_RadioButtonStrokeDisabled}"/>
+                                <Setter TargetName="Outline"
+                                        Property="Fill"
+                                        Value="{StaticResource Brush_RadioButtonDisabled}"/>
+                                <Setter TargetName="Checker"
+                                        Property="Fill"
+                                        Value="{StaticResource Brush_RadioButtonCheckerDisabled}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter TargetName="Checker"
+                                        Property="Visibility"
+                                        Value="Visible"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="Outline"
+                                        Property="Stroke"
+                                        Value="{StaticResource Brush_RadioButtonStrokeHover}"/>
+                                <Setter TargetName="Outline"
+                                        Property="Fill"
+                                        Value="{StaticResource Brush_RadioButtonHover}"/>
+                                <Setter TargetName="Checker"
+                                        Property="Fill"
+                                        Value="{StaticResource Brush_RadioButtonCheckerHover}"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="MilitaryRadioButton_Tab"
+           TargetType="RadioButton">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+
+                        <Grid Background="{StaticResource Brush_MainSecondary}">
+
+                            <Border x:Name="Panel"
+                                    Margin="1, 0"
+                                    BorderThickness="0"
+                                    Background="{StaticResource Brush_TabEnabled}"/>
+
+                            <Border x:Name="Outline"
+                                    Margin="1, 0"
+                                    Height="1"
+                                    BorderThickness="0"
+                                    Background="{StaticResource Brush_TabStrokeEnabled}"
+                                    VerticalAlignment="Top"/>
+
+                            <TextBlock x:Name="TabText"
+                                       Style="{StaticResource TextBlock_Tab}"
+                                       Padding="12, 6"
+                                       Text="{TemplateBinding Content}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsEnabled"
+                                               Value="True"/>
+                                    <Condition Property="IsChecked"
+                                               Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="TabText"
+                                        Property="Foreground"
+                                        Value="{StaticResource Brush_TextDark}"/>
+                            </MultiTrigger>
+
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TabDisabled}"/>
+                                <Setter TargetName="Outline"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TabStrokeDisabled}"/>
+                                <Setter TargetName="TabText"
+                                        Property="Opacity"
+                                        Value="0.3"/>
+                            </Trigger>
+
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TabPressed}"/>
+                                <Setter TargetName="Outline"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TabStrokePressed}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TabHover}"/>
+                                <Setter TargetName="Outline"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TabStrokeHover}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TabPressed}"/>
+                                <Setter TargetName="Outline"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TabStrokePressed}"/>
+                            </Trigger>
+                            
+                        </ControlTemplate.Triggers>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="MilitaryRadioButton_TableRow"
+           TargetType="RadioButton">
+        <Style.Setters>
+            <Setter Property="GroupName"
+                    Value="TrackRows"/>
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+
+                        <Border x:Name="Panel"
+                                Margin="0, 0, 0, 1"
+                                BorderThickness="0"
+                                BorderBrush="{StaticResource Brush_ListItemStrokeEnabled}"
+                                Background="{StaticResource Brush_ListItemEnabled}">
+                            <ContentPresenter/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ListItemStrokeDisabled}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ListItemDisabled}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ListItemStrokePressed}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ListItemPressed}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ListItemStrokeHover}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ListItemHover}"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+    
+</ResourceDictionary>

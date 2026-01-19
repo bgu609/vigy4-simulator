@@ -9,4 +9,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\dds\Pa5455CmsDds.csproj" />
+    <ProjectReference Include="..\resource\Pa5455CmsResource.csproj" />
+  </ItemGroup>
+
 </Project>

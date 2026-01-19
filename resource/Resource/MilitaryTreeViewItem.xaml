@@ -1,0 +1,226 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="MilitaryTypography.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <PathGeometry x:Key="MilitaryTreeArrow_Collapse"
+                  Figures="M6 15L12 9L6 3"/>
+    <PathGeometry x:Key="MilitaryTreeArrow_Expand"
+                  Figures="M3 6L9 12L15 6"/>
+
+    <Style x:Key="MilitaryExpandCollapseToggle"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+
+                    <Border Background="Transparent"
+                            Width="26"
+                            Height="26">
+                        <Path x:Name="ExpandPath"
+                              Data="{StaticResource MilitaryTreeArrow_Collapse}"
+                              Margin="0, 4, 0, 0"
+                              Stroke="{StaticResource Brush_DividerWhite75}"
+                              StrokeThickness="2"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"/>
+                    </Border>
+                    
+                    <ControlTemplate.Triggers>
+                        
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Data" TargetName="ExpandPath"
+                                    Value="{StaticResource MilitaryTreeArrow_Expand}"/>
+                        </Trigger>
+                        
+                        <Trigger Property="IsMouseOver" Value="True">
+                        </Trigger>
+                        
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsChecked" Value="True"/>
+                            </MultiTrigger.Conditions>
+                        </MultiTrigger>
+                        
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MilitaryTreeViewItem"
+           TargetType="TreeViewItem">
+        <Style.Setters>
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+            <Setter Property="BorderBrush"
+                    Value="Transparent"/>
+            <Setter Property="Background"
+                    Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TreeViewItem">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border x:Name="BackPanel"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="3"
+                                    SnapsToDevicePixels="True"
+                                    BorderThickness="0, 0, 0, 1"
+                                    BorderBrush="{StaticResource Brush_PopupStroke}"
+                                    Background="{StaticResource Brush_PopupBackground}"/>
+
+                            <ToggleButton x:Name="Expander"
+                                          Style="{StaticResource MilitaryExpandCollapseToggle}"
+                                          Grid.Row="0"
+                                          Grid.Column="0"
+                                          ClickMode="Press"
+                                          IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                            <Border x:Name="Panel"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Padding="5, 1"
+                                    Background="Transparent">
+                                <Grid>
+                                    
+                                    <ContentPresenter x:Name="PART_Header"
+                                                      ContentSource="Header"
+                                                      TextElement.FontSize="{StaticResource FontSize_List}"
+                                                      TextElement.FontWeight="{StaticResource FontWeight_List}"
+                                                      TextElement.FontFamily="Noto Sans KR"
+                                                      TextElement.Foreground="{StaticResource Brush_IconDefault}"
+                                                      VerticalAlignment="Center"/>
+
+                                    <Border Width="60"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            Background="{TemplateBinding Background}"
+                                            HorizontalAlignment="Right"/>
+
+                                </Grid>
+                            </Border>
+
+                            <ItemsPresenter x:Name="ItemsHost"
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2"
+                                            Visibility="Collapsed"/>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsExpanded"
+                                               Value="True"/>
+                                    <Condition Property="HasItems"
+                                               Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="PART_Header"
+                                        Property="TextElement.Foreground"
+                                        Value="{StaticResource Brush_TextDefault}"/>
+                                <Setter TargetName="ItemsHost"
+                                        Property="Visibility"
+                                        Value="Visible"/>
+                            </MultiTrigger>
+
+                            <Trigger Property="HasItems"
+                                     Value="False">
+                                <Setter TargetName="Expander"
+                                        Property="Visibility"
+                                        Value="Hidden"/>
+                                <Setter TargetName="ItemsHost"
+                                        Property="Grid.Column"
+                                        Value="0"/>
+                                <Setter TargetName="ItemsHost"
+                                        Property="Grid.ColumnSpan"
+                                        Value="3"/>
+                            </Trigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="HasHeader"
+                                               Value="False"/>
+                                    <Condition Property="Width"
+                                               Value="Auto"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="PART_Header"
+                                        Property="MinWidth"
+                                        Value="75"/>
+                            </MultiTrigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="HasHeader"
+                                               Value="False"/>
+                                    <Condition Property="Height"
+                                               Value="Auto"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="PART_Header"
+                                        Property="MinHeight"
+                                        Value="19"/>
+                            </MultiTrigger>
+
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter TargetName="BackPanel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ListItemStrokePressed}"/>
+                                <Setter TargetName="BackPanel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ListItemPressed}"/>
+                            </Trigger>
+                            
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected"
+                                               Value="True"/>
+                                    <Condition Property="IsSelectionActive"
+                                               Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="BackPanel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_PopupStroke}"/>
+                                <Setter TargetName="BackPanel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_PopupBackground}"/>
+                            </MultiTrigger>
+                            
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter TargetName="BackPanel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ListItemStrokeDisabled}"/>
+                                <Setter TargetName="BackPanel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ListItemDisabled}"/>
+                                <Setter TargetName="PART_Header"
+                                        Property="TextElement.Foreground"
+                                        Value="{StaticResource Brush_TextDisabled}"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+    
+</ResourceDictionary>

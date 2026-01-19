@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\icon_arrow_down.png" />
+    <Resource Include="Images\icon_arrow_right.png" />
+    <Resource Include="Images\icon_max.png" />
+    <Resource Include="Images\icon_min.png" />
+    <Resource Include="Images\icon_minus.png" />
+    <Resource Include="Images\icon_plus.png" />
+    <Resource Include="Images\icon_popup_close.png" />
+    <Resource Include="Images\icon_share.png" />
+  </ItemGroup>
+
+</Project>

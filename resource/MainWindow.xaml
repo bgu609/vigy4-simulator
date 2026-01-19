@@ -1,0 +1,613 @@
+﻿<Window x:Class="Pa5455CmsResource.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pa5455CmsResource"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="900" Width="1600" WindowStartupLocation="CenterScreen"
+        Background="{StaticResource Brush_Popup640_Bg}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0"
+                    Orientation="Vertical">
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+                <Button Style="{StaticResource MilitaryButton}"
+                        Margin="5"
+                        Content="Test"/>
+                <Button Style="{StaticResource MilitaryButton}"
+                        Margin="5"
+                        Content="Test"
+                        IsEnabled="False"/>
+
+                <Button Style="{StaticResource MilitaryButton_Image}"
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="15, 0, 3, 0"
+                        Width="26"
+                        Height="26">
+                    <Image Source="pack://application:,,,/Pa5455CmsResource;component/Images/icon_minus.png"
+                           Width="12"
+                           Height="12"/>
+                </Button>
+                <RepeatButton Style="{StaticResource MilitaryRepeatButton_Image}"
+                              Grid.Row="0"
+                              Grid.Column="6"
+                              Margin="3, 0, 15, 0"
+                              Width="26"
+                              Height="26">
+                    <Image Source="pack://application:,,,/Pa5455CmsResource;component/Images/icon_plus.png"
+                           Width="12"
+                           Height="12"/>
+                </RepeatButton>
+            </StackPanel>
+
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Top}"/>
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Bottom}"/>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+                <RadioButton Style="{StaticResource MilitaryRadioButton}"
+                             Margin="5"
+                             Padding="5, 0"
+                             Content="Test1"/>
+                <RadioButton Style="{StaticResource MilitaryRadioButton}"
+                             Margin="5"
+                             Padding="5, 0"
+                             Content="Test2"/>
+                <RadioButton Style="{StaticResource MilitaryRadioButton}"
+                             Margin="5"
+                             Padding="5, 0"
+                             Content="Test3"
+                             IsChecked="True"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+                <RadioButton Style="{StaticResource MilitaryToggleButton_Multiple}"
+                             Margin="5"
+                             Padding="5, 0"
+                             Content="Test1"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"/>
+                <RadioButton Style="{StaticResource MilitaryToggleButton_Multiple}"
+                             Margin="5"
+                             Padding="5, 0"
+                             Content="Test2"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"/>
+                <RadioButton Style="{StaticResource MilitaryToggleButton_Multiple}"
+                             Margin="5"
+                             Padding="5, 0"
+                             Content="Test3"
+                             IsChecked="True"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"/>
+            </StackPanel>
+
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Top}"/>
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Bottom}"/>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+                <RadioButton Style="{StaticResource MilitaryRadioButton}"
+                             Margin="5"
+                             IsEnabled="False"/>
+                <RadioButton Style="{StaticResource MilitaryRadioButton}"
+                             Margin="5"
+                             IsEnabled="False"/>
+                <RadioButton Style="{StaticResource MilitaryRadioButton}"
+                             Margin="5"
+                             IsEnabled="False"
+                             IsChecked="True"/>
+            </StackPanel>
+
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Top}"/>
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Bottom}"/>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+
+                <ToggleButton Style="{StaticResource MilitaryToggleButton}"
+                              Margin="5"
+                              Content="ON"
+                              Tag="OFF"/>
+
+                <ToggleButton Style="{StaticResource MilitaryToggleButton}"
+                              Margin="5"
+                              Content="OnLongOnLongOnLong"
+                              Tag="OffLongOffLong"/>
+
+            </StackPanel>
+
+            <ToggleButton Style="{StaticResource MilitaryToggleButton}"
+                          Margin="10"
+                          Content="ON"
+                          Tag="OFF"
+                          IsEnabled="False"
+                          HorizontalAlignment="Left"/>
+
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Top}"/>
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Bottom}"/>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+                <CheckBox Style="{StaticResource MilitaryCheckBox}"
+                          Margin="5"/>
+                <CheckBox Style="{StaticResource MilitaryCheckBox}"
+                          Margin="5"
+                          IsChecked="True"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+                <CheckBox Style="{StaticResource MilitaryCheckBox}"
+                          Margin="5"
+                          IsEnabled="False"/>
+                <CheckBox Style="{StaticResource MilitaryCheckBox}"
+                          Margin="5"
+                          IsChecked="True"
+                          IsEnabled="False"/>
+            </StackPanel>
+
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Top}"/>
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Bottom}"/>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <RadioButton Style="{StaticResource MilitaryRadioButton_Tab}"
+                                 Grid.Column="0"
+                                 Content="Sample 1"
+                                 IsChecked="True"/>
+                    <RadioButton Style="{StaticResource MilitaryRadioButton_Tab}"
+                                 Grid.Column="1"
+                                 Content="Sample 2"/>
+                    <RadioButton Style="{StaticResource MilitaryRadioButton_Tab}"
+                                 Grid.Column="2"
+                                 Content="Sample 3"/>
+                    <RadioButton Style="{StaticResource MilitaryRadioButton_Tab}"
+                                 Grid.Column="3"
+                                 Content="Sample 4"
+                                 IsEnabled="False"/>
+                </Grid>
+            </StackPanel>
+
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Top}"/>
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Bottom}"/>
+
+            <TextBox Style="{StaticResource MilitaryTextBox}"
+                     Width="200"
+                     Height="26"
+                     Margin="10"
+                     Text="asdfEFG123가나다라"/>
+
+            <TextBox Style="{StaticResource MilitaryTextBox}"
+                     Width="200"
+                     Margin="10"
+                     Height="26"
+                     Text="not enabled not enabled not enabled not enabled not enabled not enabled"
+                     IsEnabled="False"/>
+
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Top}"/>
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Bottom}"/>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+
+                <ComboBox Style="{StaticResource MilitaryComboBox}"
+                          Margin="5"
+                          Width="100">
+                    <ComboBoxItem 
+                                  Content="Test 1"/>
+                    <ComboBoxItem 
+                                  Content="Test 2"/>
+                    <ComboBoxItem 
+                                  Content="Test 3"
+                                  IsEnabled="False"/>
+                    <ComboBoxItem 
+                                  Content="Test 4 Test 4 Test 4 Test 4"/>
+                </ComboBox>
+
+                <ComboBox Style="{StaticResource MilitaryComboBox}"
+                          Margin="5"
+                          Width="100"
+                          IsEnabled="False"/>
+
+            </StackPanel>
+
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Top}"/>
+            <Border Style="{StaticResource MilitaryBorder_DividerH2Bottom}"/>
+
+            <Grid>
+
+                <ScrollViewer Style="{StaticResource MilitaryScrollViewer}"
+              Margin="10"
+              Width="400"
+              Height="100"
+              HorizontalAlignment="Left">
+                    <StackPanel Orientation="Vertical">
+                        <RadioButton Style="{StaticResource MilitaryRadioButton_TableRow}"
+                     Height="30">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="0"
+                           Text="Test 11"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="1"
+                           Text="Test 12"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="2"
+                           Text="Test 123"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="3"
+                           Text="Test 1234"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource MilitaryRadioButton_TableRow}"
+                     Height="30">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="0"
+                           Text="Test 11"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="1"
+                           Text="Test 12"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="2"
+                           Text="Test 123"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="3"
+                           Text="Test 1234"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource MilitaryRadioButton_TableRow}"
+                     Height="30">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="0"
+                           Text="Test 11"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="1"
+                           Text="Test 12"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="2"
+                           Text="Test 123"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="3"
+                           Text="Test 1234"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource MilitaryRadioButton_TableRow}"
+                     Height="30">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="0"
+                           Text="Test 11"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="1"
+                           Text="Test 12"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="2"
+                           Text="Test 123"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="3"
+                           Text="Test 1234"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource MilitaryRadioButton_TableRow}"
+                     Height="30">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="0"
+                           Text="Test 11"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="1"
+                           Text="Test 12"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="2"
+                           Text="Test 123"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource TextBlock_List}"
+                           Grid.Column="3"
+                           Text="Test 1234"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </RadioButton>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ItemsControl Style="{StaticResource MilitaryItemControl}"
+                      Grid.Row="2"
+                              Margin="10"
+                              Width="250"
+                              HorizontalAlignment="Right">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+
+                            <RadioButton Style="{StaticResource MilitaryRadioButton_TableRow}"
+                                         Height="26">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="22"/>
+                                    </Grid.ColumnDefinitions>
+
+                                </Grid>
+                            </RadioButton>
+
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="1"
+                    Orientation="Vertical">
+
+            <Border Style="{StaticResource MilitaryBorder_Popup}"
+                    Width="640">
+                <StackPanel Orientation="Vertical">
+
+                    <Border Background="{StaticResource Brush_HeadlineBackground}">
+                        <Grid>
+
+                            <TextBlock Style="{StaticResource TextBlock_Headline}"
+                                       Margin="10, 0"
+                                       Text="Popup Headline"
+                                       VerticalAlignment="Center"/>
+
+                            <Button Style="{StaticResource MilitaryButton_Close}"
+                                    HorizontalAlignment="Right"/>
+
+                        </Grid>
+                    </Border>
+
+                    <Menu Background="Transparent">
+                        <MenuItem Style="{StaticResource MilitaryMenuItem}" Header="Setting">
+                            <MenuItem Header="Connection Setting" Command="{Binding showConnectionSettingDialog}"/>
+                            <MenuItem Header="Radar Setting" Command="{Binding showRadarSettingDialog}"/>
+                            <MenuItem Header="Laser Setting" Command="{Binding showLaserSettingDialog}"/>
+                            <MenuItem Header="IR Setting" Command="{Binding showIrSettingDialog}"/>
+                            <MenuItem Header="TV Setting" Command="{Binding showTvSettingDialog}"/>
+                            <MenuItem Header="Video Tracking Setting" Command="{Binding showVideoTrackingSettingDialog}"/>
+                        </MenuItem>
+                        <MenuItem Style="{StaticResource MilitaryMenuItem}" Header="Control">
+                            <MenuItem Header="Device Control" Command="{Binding showDeviceControlDialog}"/>
+                            <MenuItem Header="Device Status" Command="{Binding showDeviceStatusControlDialog}"/>
+                            <MenuItem Header="Delete Source Track" Command="{Binding showDeleteSourceTrackControlDialog}"/>
+                            <MenuItem Header="Self-Cueing" Command="{Binding showSelfCueingControlDialog}"/>
+                            <MenuItem Header="Ship Data Excluded Selection" Command="{Binding showShipDataExcludedSelectionControlDialog}"/>
+                            <MenuItem Header="Radar Video Surveillance" Command="{Binding showRadarVideoSurveillanceControlDialog}"/>
+                            <MenuItem Header="Request TRS Full Status"/>
+                        </MenuItem>
+                        <MenuItem Style="{StaticResource MilitaryMenuItem}" Header="Mode">
+                            <MenuItem Header="Search Mode" Command="{Binding showSearchModeDialog}"/>
+                            <MenuItem Header="Acquisition Mode" Command="{Binding showAcquisitionModeDialog}"/>
+                            <MenuItem Header="Tracking Mode" Command="{Binding showTrackingModeDialog}"/>
+                            <MenuItem Header="Cancel Cueing Order"/>
+                        </MenuItem>
+                        <MenuItem Style="{StaticResource MilitaryMenuItem}" Header="Data">
+                            <MenuItem Header="Autonomous Training Data" Command="{Binding showAutonomousTrainingDataDialog}"/>
+                            <MenuItem Header="Estimated Anti Naval Mode Data" Command="{Binding showEstimatedAntiNavalModeDataDialog}"/>
+                            <MenuItem Header="Ghost Trajectory Initial Data" Command="{Binding showGhostTrajectoryInitialDataDialog}"/>
+                            <MenuItem Header="External Horn Global Test Data" Command="{Binding showExternalHornGlobalTestDataDialog}"/>
+                            <MenuItem Header="Horizon Checks Data" Command="{Binding showHorizonChecksDataDialog}"/>
+                            <MenuItem Header="Installation Data" Command="{Binding showInstallationDataDialog}"/>
+                            <MenuItem Header="Logger Data" Command="{Binding showLoggerDataDialog}"/>
+                            <MenuItem Header="Servo Test Data" Command="{Binding showServoTestDataDialog}"/>
+                            <MenuItem Header="Test Gun Boresight Data" Command="{Binding showTestGunBoresightDataDialog}"/>
+                        </MenuItem>
+                        <MenuItem Style="{StaticResource MilitaryMenuItem}" Header="Track">
+                        </MenuItem>
+                        <MenuItem Style="{StaticResource MilitaryMenuItem}" Header="A-Scope">
+                        </MenuItem>
+                    </Menu>
+
+                    <Border Style="{StaticResource MilitaryBorder_DividerH2Top}"/>
+                    <Border Style="{StaticResource MilitaryBorder_DividerH2Bottom}"/>
+
+                    <TextBlock Style="{StaticResource TextBlock_Headline}"
+                               Margin="10, 0"
+                               Text="Headline"/>
+                    <TextBlock Style="{StaticResource TextBlock_BodyTitle}"
+                               Margin="10, 0"
+                               Text="Body Title"/>
+                    <TextBlock Style="{StaticResource TextBlock_SubTitle}"
+                               Margin="10, 0"
+                               Text="Sub Title"/>
+                    <TextBlock Style="{StaticResource TextBlock_SubTitle_L}"
+                               Margin="10, 0"
+                               Text="Sub Title L"/>
+
+                    <TextBlock Style="{StaticResource TextBlock_Label_S}"
+                               Margin="10, 0"
+                               Text="Label S"/>
+                    <TextBlock Style="{StaticResource TextBlock_Label_M}"
+                               Margin="10, 0"
+                               Text="Label M"/>
+                    <TextBlock Style="{StaticResource TextBlock_List}"
+                               Margin="10, 0"
+                               Text="List"/>
+                    <TextBlock Style="{StaticResource TextBlock_SubTxt}"
+                               Margin="10, 0"
+                               Text="Sub Txt"/>
+                    <TextBlock Style="{StaticResource TextBlock_Txt_S}"
+                               Margin="10, 0"
+                               Text="TXT S"/>
+                    <TextBlock Style="{StaticResource TextBlock_Txt_M}"
+                               Margin="10, 0"
+                               Text="TXT M"/>
+                    <TextBlock Style="{StaticResource TextBlock_Txt_L}"
+                               Margin="10, 0"
+                               Text="TXT L"/>
+                    <TextBlock Style="{StaticResource TextBlock_Txt_XL}"
+                               Margin="10, 0"
+                               Text="TXT XL"/>
+                    <TextBlock Style="{StaticResource TextBlock_Caption_S}"
+                               Margin="10, 0"
+                               Text="Caption S"/>
+                    <TextBlock Style="{StaticResource TextBlock_Caption_M}"
+                               Margin="10, 0"
+                               Text="Caption M"/>
+
+                    <TextBlock Style="{StaticResource TextBlock_Tab}"
+                               Margin="10, 0"
+                               Text="Tab"/>
+                    <TextBlock Style="{StaticResource TextBlock_TableHeader}"
+                               Margin="10, 0"
+                               Text="Table Header"/>
+                    <TextBlock Style="{StaticResource TextBlock_TableBody}"
+                               Margin="10, 0"
+                               Text="Table Body"/>
+
+                    <TextBlock Style="{StaticResource TextBlock_Component_M}"
+                               Margin="10, 0"
+                               Text="Component M"/>
+                    <TextBlock Style="{StaticResource TextBlock_Component_L}"
+                               Margin="10, 0"
+                               Text="Component L"/>
+
+                </StackPanel>
+            </Border>
+
+            <TreeView Margin="20"
+                      Padding="0"
+                      Width="320"
+                      Height="200"
+                      BorderThickness="0"
+                      Background="Transparent"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <TreeViewItem Style="{StaticResource MilitaryTreeViewItem}"
+                              Header="Item 1"
+                              BorderBrush="{StaticResource Brush_TextBoxDisabled}"
+                              Background="{StaticResource Brush_Warning}"
+                              IsExpanded="True">
+                    <TreeViewItem Header="Sub Item 1"
+                                  Style="{StaticResource MilitaryTreeViewItem}"
+                                  BorderBrush="{StaticResource Brush_TextBoxDisabled}"
+                                  Background="{StaticResource Brush_Alert}"/>
+                    <TreeViewItem Header="Sub Item 2"
+                                  Style="{StaticResource MilitaryTreeViewItem}"
+                                  BorderBrush="{StaticResource Brush_TextBoxDisabled}"
+                                  Background="{StaticResource Brush_Confirm}"
+                                  IsExpanded="True">
+                        <TreeViewItem Header="Test 1"
+                                      Style="{StaticResource MilitaryTreeViewItem}"/>
+                        <TreeViewItem Header="Test 2"
+                                      Style="{StaticResource MilitaryTreeViewItem}"/>
+                        <TreeViewItem Header="Test 3"
+                                      Style="{StaticResource MilitaryTreeViewItem}"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Sub Item 3"
+                                  Style="{StaticResource MilitaryTreeViewItem}"
+                                  BorderBrush="{StaticResource Brush_TextBoxDisabled}"
+                                  Background="{StaticResource Brush_Confirm}"/>
+                    <TreeViewItem Header="Sub Item 4"
+                                  Style="{StaticResource MilitaryTreeViewItem}"
+                                  BorderBrush="{StaticResource Brush_TextBoxDisabled}"
+                                  Background="{StaticResource Brush_Confirm}"/>
+                </TreeViewItem>
+                <TreeViewItem Style="{StaticResource MilitaryTreeViewItem}"
+                              Header="Item 2"
+                              BorderBrush="{StaticResource Brush_TextBoxDisabled}"
+                              Background="{StaticResource Brush_Confirm}">
+                    <TreeViewItem Style="{StaticResource MilitaryTreeViewItem}"
+                                  Header="Sub Item 1"/>
+                </TreeViewItem>
+                <TreeViewItem Style="{StaticResource MilitaryTreeViewItem}"
+                              Header="Item 3"/>
+                <TreeViewItem Style="{StaticResource MilitaryTreeViewItem}"
+                              Header="Item 4"/>
+            </TreeView>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

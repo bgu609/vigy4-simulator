@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+/**
+* @file     USER_QOS_PROFILES_PA.xml
+* @brief    PA 프로젝트의 QoS를 정의함.
+*           KISS QoS를 튜닝하여 설정.
+* @date     
+* [20250104] initial release.
+*/
+--><!-- $$DATE$$ tmpl ver 20161011--><dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="[VERSION]" xsi:noNamespaceSchemaLocation="C:/Program Files/rti_connext_dds-7.3.0/resource/schema/rti_dds_qos_profiles.xsd">
+
+
+  <qos_library name="PAQoSLib">
+		<!-- A common Participant base profile that configures a fast, a medium,
+         and a slow flow controller that can each be used to throttle 
+         application data flow at different rates. -->
+		<qos_profile base_name="BuiltinQosLibExp::Generic.Participant.LargeData" is_default_qos="true" name="ParticipantQos">
+			<!--asynchronous_publisher의 경우 기본이 normal 이므로 queue를 빨리 비울 수 없을 수 있어 빨리 보내도록 제일 높은 priority 적용 2020.11.05 why-->
+			<publisher_qos>
+				<asynchronous_publisher>
+					<thread>
+						<priority>THREAD_PRIORITY_HIGH</priority>
+					</thread>
+				</asynchronous_publisher>
+			</publisher_qos>
+			<participant_qos>
+				<participant_name>
+					<name>PERU QOS(LIG)</name>
+				</participant_name>
+				<database>
+					<thread>
+						<!--database 의 경우 기본이 THREAD_PRIORITY_LOW 이므로 db 갱신을 빨리 처리할 수 있도록 상위단계 priority 적용 2020.11.05 why-->
+						<priority>THREAD_PRIORITY_ABOVE_NORMAL</priority>
+					</thread>
+				</database>
+				<event>
+					<thread>
+						<stack_size>262144</stack_size>
+						<!--event 의 경우 기본이 THREAD_PRIORITY_BELOW_NORMAL 이므로 이벤트를 빨리 처리할 수 있도록 상위단계 priority 적용 2020.11.05 why-->
+						<priority>THREAD_PRIORITY_ABOVE_NORMAL</priority>
+					</thread>
+				</event>
+				<transport_builtin>
+					<mask>UDPv4</mask>
+				</transport_builtin>
+				<receiver_pool>
+          <buffer_size>8388608</buffer_size>
+<!--! 8MB-->
+				</receiver_pool>
+				<resource_limits>
+					<type_code_max_serialized_length>0</type_code_max_serialized_length>
+					<type_object_max_serialized_length>1048576</type_object_max_serialized_length>
+				</resource_limits>
+				<property>
+					<value>
+						<!-- sFast: is 200 MB/sec (1676 Mb/sec) flow controller -->
+						<element>
+							<name>dds.flow_controller.token_bucket.sfast_flow.token_bucket.max_tokens</name>
+							<value>128</value>
+						</element>
+						<element>
+							<name>dds.flow_controller.token_bucket.sfast_flow.token_bucket.tokens_added_per_period</name>
+							<value>128</value>
+						</element>
+						<element>
+							<name>dds.flow_controller.token_bucket.sfast_flow.token_bucket.bytes_per_token</name>
+							<value>16384</value>
+						</element>
+						<element>
+							<name>dds.flow_controller.token_bucket.sfast_flow.token_bucket.period.sec</name>
+							<value>0</value>
+						</element>
+						<element>
+							<name>dds.flow_controller.token_bucket.sfast_flow.token_bucket.period.nanosec</name>
+							<value>10000000</value>
+						</element>
+						<!--element>
+              <name>dds.transport.UDPv4.builtin.parent.deny_interfaces_list</name>
+              <value>172.20.*</value>
+            </element-->
+						<element>
+							<name>dds.transport.UDPv6.builtin.parent.deny_interfaces_list</name>
+							<value>*.*.*.*.*.*.*.*</value>
+						</element>
+						<element>
+							<!--[20191127] yhkim, support multi-hop -->
+							<name>dds.transport.UDPv4.builtin.multicast_ttl</name>
+							<value>6</value>
+						</element>
+						<element>
+							<name>dds.clock.internal_clock</name>
+							<value>monotonic</value>
+						</element>
+						<element>
+							<name>dds.transport.UDPv4.builtin.parent.message_size_max</name>
+							<!--[20190103]for preventing ip fragmentations for jumbo frame-->
+							<value>65507</value>
+							<propagate>false</propagate>
+						</element>
+						<element>
+							<name>dds.transport.UDPv4.builtin.recv_socket_buffer_size</name>
+							<value>204857600</value>
+							<propagate>false</propagate>
+						</element>
+						<element>
+							<name>dds.transport.UDPv4.builtin.send_socket_buffer_size</name>
+							<value>204857600</value>
+							<propagate>false</propagate>
+						</element>
+						<!--shared memory setting-->
+						<element>
+							<name>dds.transport.shmem.builtin.parent.message_size_max</name>
+							<value>262144</value>
+							<!-- 256 KB -->
+							<propagate>false</propagate>
+						</element>
+						<element>
+							<name>dds.transport.shmem.builtin.receive_buffer_size</name>
+							<value>524288</value>
+							<!-- 512 KB -->
+							<propagate>false</propagate>
+						</element>
+						<element>
+							<name>dds.transport.UDPv4.builtin.disable_interface_tracking</name>
+							<value>1</value>
+						</element>
+					</value>
+
+				</property>
+				<discovery>
+					<!--initial_peers에 설정된 IP와만 unicast discovery 수행한다.-->
+				</discovery>
+				<discovery_config>
+					<!--rtidds 6.0에 기본으로 채택된 type object 압축을 기존 DDS 버전과 호환성을 갖도록 압축하지 않도록함 2020.11.05 why-->
+					<!--rtidds 6.1.0 모두 적용하여 아래의 파라미터 사용하지 않도록 함. 210831 G.-->
+					<!--endpoint_type_object_lb_serialization_threshold>-1</endpoint_type_object_lb_serialization_threshold-->
+					<!--initial_participant_announcements>2</initial_participant_announcements-->
+					<!--min 1, max 1 is Defualt Value /G-->
+					<!--min_initial_participant_announcement_period>
+            <sec>1</sec>
+            <nanosec>0</nanosec>
+          </min_initial_participant_announcement_period>
+          <max_initial_participant_announcement_period>
+            <sec>30</sec>
+            <nanosec>0</nanosec>
+          </max_initial_participant_announcement_period-->
+					<publication_writer_publish_mode>
+						<kind>ASYNCHRONOUS_PUBLISH_MODE_QOS</kind>
+					</publication_writer_publish_mode>
+					<subscription_writer_publish_mode>
+						<kind>ASYNCHRONOUS_PUBLISH_MODE_QOS</kind>
+					</subscription_writer_publish_mode>
+					<!--publication_reader_resource_limits>
+            <dynamically_allocate_fragmented_samples>true</dynamically_allocate_fragmented_samples>
+            <max_fragments_per_sample>4096</max_fragments_per_sample>
+            <max_fragmented_samples>65535</max_fragmented_samples>
+          </publication_reader_resource_limits>
+          <subscription_reader_resource_limits>
+            <dynamically_allocate_fragmented_samples>true</dynamically_allocate_fragmented_samples>
+            <max_fragments_per_sample>4096</max_fragments_per_sample>
+            <max_fragmented_samples>65535</max_fragmented_samples>
+          </subscription_reader_resource_limits-->
+					<!--[20200703] change liveness -->
+					<participant_liveliness_lease_duration>
+						<sec>4</sec>
+						<nanosec>DURATION_ZERO_NSEC</nanosec>
+					</participant_liveliness_lease_duration>
+					<participant_liveliness_assert_period>
+						<sec>1</sec>
+						<nanosec>DURATION_ZERO_NSEC</nanosec>
+					</participant_liveliness_assert_period>
+					<!--max_liveliness_loss_detection_period>
+            <sec>3</sec>
+            <nanosec>0</nanosec>
+          </max_liveliness_loss_detection_period-->
+				</discovery_config>
+			</participant_qos>
+			<participant_factory_qos>
+				<logging>
+					<output_file>DDS.log</output_file>
+					<verbosity>WARNING</verbosity>
+					<print_format>TIMESTAMPED</print_format>
+				</logging>
+			</participant_factory_qos>
+		</qos_profile>
+		<!-- This profile is for topics that must be pub/sub only in one computer. -->
+		<qos_profile base_name="BuiltinQosLibExp::Generic.Participant.LargeData" name="ParticipantQosInternal">
+			<datawriter_qos>
+				<reliability>
+					<kind>RELIABLE_RELIABILITY_QOS</kind>
+					<max_blocking_time>
+						<sec>1</sec>
+						<nanosec>0</nanosec>
+					</max_blocking_time>
+				</reliability>
+			</datawriter_qos>
+			<datareader_qos>
+				<resource_limits>
+					<max_samples>256</max_samples>
+				</resource_limits>
+				<reliability>
+					<kind>RELIABLE_RELIABILITY_QOS</kind>
+				</reliability>
+			</datareader_qos>
+      <publisher_qos>
+        <asynchronous_publisher>
+          <thread>
+            <priority>THREAD_PRIORITY_HIGH</priority>
+          </thread>
+        </asynchronous_publisher>
+      </publisher_qos>
+			<participant_qos>
+				<!-- enable the built-in shared memory transport -->
+				<transport_builtin>
+					<mask>SHMEM</mask>
+				</transport_builtin>
+				<participant_name>
+					<name>PERU QOS(LIG) Internal</name>
+				</participant_name>
+				<discovery>
+					<initial_peers>
+						<element>40@builtin.shmem://</element>
+					</initial_peers>
+				</discovery>
+				<resource_limits>
+					<type_code_max_serialized_length>0</type_code_max_serialized_length>
+					<type_object_max_serialized_length>1048576</type_object_max_serialized_length>
+				</resource_limits>
+				<property>
+					<value>
+						<element>
+							<name>dds.transport.shmem.builtin.parent.message_size_max</name>
+							<value>65536</value>
+							<propagate>false</propagate>
+						</element>
+						<element>
+							<name>dds.transport.shmem.builtin.receive_buffer_size</name>
+							<value>1048576</value>
+							<propagate>false</propagate>
+						</element>
+						<element>
+							<name>dds.transport.shmem.builtin.received_message_count_max</name>
+							<value>64</value>
+							<propagate>false</propagate>
+						</element>
+					</value>
+				</property>
+        <discovery_config>
+          <publication_writer_publish_mode>
+            <kind>ASYNCHRONOUS_PUBLISH_MODE_QOS</kind>
+          </publication_writer_publish_mode>
+          <subscription_writer_publish_mode>
+            <kind>ASYNCHRONOUS_PUBLISH_MODE_QOS</kind>
+          </subscription_writer_publish_mode>
+        </discovery_config>
+			</participant_qos>
+		</qos_profile>
+
+		<!-- This profile guarantees delivery of every published sample. 
+         Samples will not be overwritten, regardless of HistoryQosPolicy's depth. 
+         Strict reliability ensures in-order delivery and retransmission of 
+         lost samples. -->
+		<qos_profile base_name="BuiltinQosLibExp::Generic.KeepLastReliable" name="Event">
+			<datawriter_qos>
+				<reliability>
+					<max_blocking_time>
+						<sec>1</sec>
+						<nanosec>0</nanosec>
+					</max_blocking_time>
+				</reliability>
+				<history>
+					<kind>KEEP_LAST_HISTORY_QOS</kind>
+					<depth>128</depth>
+				</history>
+				<!--이벤트는 기본으로 충분 2020.11.05 why -->
+			</datawriter_qos>
+			<datareader_qos>
+				<history>
+					<kind>KEEP_LAST_HISTORY_QOS</kind>
+					<depth>128</depth>
+				</history>
+			</datareader_qos>
+		</qos_profile>
+
+		<qos_profile base_name="Event" name="EventMulti">
+			<datareader_qos>
+				<multicast>
+					<value>
+						<element>
+							<!--multicast address range is '224.0.0.0' to '239.255.255.255'-->
+							<receive_address>239.255.5.100</receive_address>
+						</element>
+					</value>
+				</multicast>
+			</datareader_qos>
+		</qos_profile>
+		
+		<!-- [20200821] "Wirters 1 : Reader 1" & Keep Last One. -->
+		<qos_profile base_name="Event" name="EventKeepOne">
+			<datawriter_qos>
+				<history>
+					<depth>1</depth>
+				</history>
+			</datawriter_qos>
+			<datareader_qos>
+				<history>
+					<depth>1</depth>
+				</history>
+			</datareader_qos>
+		</qos_profile>
+
+		<qos_profile base_name="EventKeepOne" name="EventKeepOneMulti">
+			<datareader_qos>
+				<multicast>
+					<value>
+						<element>
+							<!--multicast address range is '224.0.0.0' to '239.255.255.255'-->
+							<receive_address>239.255.5.110</receive_address>
+						</element>
+					</value>
+				</multicast>
+			</datareader_qos>
+		</qos_profile>
+		
+		<!-- This profile is intended to be used for applications that expect
+         periodic data such as sensor data. The deadline that is set in
+         this profile can be used to detect when DataWriters are not
+         publishing data with the expected periodicity. -->
+		<!-- To Be Deleted -->
+		<qos_profile base_name="BuiltinQosLibExp::Pattern.PeriodicData" name="Periodic">
+			<datawriter_qos>
+				<reliability>
+					<max_blocking_time>
+						<sec>1</sec>
+						<nanosec>0</nanosec>
+					</max_blocking_time>
+				</reliability>
+				<deadline>
+					<period>
+						<sec>DURATION_INFINITE_SEC</sec>
+						<nanosec>DURATION_INFINITE_NSEC</nanosec>
+					</period>
+				</deadline>
+			</datawriter_qos>
+			<datareader_qos>
+				<deadline>
+					<period>
+						<sec>DURATION_INFINITE_SEC</sec>
+						<nanosec>DURATION_INFINITE_NSEC</nanosec>
+					</period>
+				</deadline>
+			</datareader_qos>
+		</qos_profile>
+
+		<qos_profile base_name="Periodic" name="PeriodicMulti">
+			<datareader_qos>
+				<multicast>
+					<value>
+						<element>
+							<!--multicast address range is '224.0.0.0' to '239.255.255.255'-->
+							<receive_address>239.255.5.120</receive_address>
+						</element>
+					</value>
+				</multicast>
+			</datareader_qos>
+		</qos_profile>
+
+		<!-- [20200812] "Wirters 1 : Reader 1" & Keep Last One. -->
+		<qos_profile base_name="BuiltinQosLibExp::Generic.KeepLastReliable" name="PeriodicKeepOne">
+			<datawriter_qos>
+				<reliability>
+					<max_blocking_time>
+						<sec>0</sec>
+						<nanosec>1000000</nanosec>
+					</max_blocking_time>
+				</reliability>
+				<history>
+					<depth>1</depth>
+				</history>
+			</datawriter_qos>
+			<datareader_qos>
+				<history>
+					<depth>1</depth>
+				</history>
+        <resource_limits>
+          <initial_samples>10000</initial_samples>
+          <max_samples>10000</max_samples>
+          <max_instances>10000</max_instances>
+          <max_samples_per_instance>1</max_samples_per_instance>
+        </resource_limits>
+			</datareader_qos>
+		</qos_profile>
+
+		<!-- [20200812] "Writer 1 : Reader N" & Keep Last One. -->
+		<qos_profile base_name="PeriodicKeepOne" name="PeriodicKeepOneMulti">
+			<datareader_qos>
+				<multicast>
+					<value>
+						<element>
+							<!--multicast address range is '224.0.0.0' to '239.255.255.255'-->
+							<receive_address>239.255.5.130</receive_address>
+						</element>
+					</value>
+				</multicast>
+			</datareader_qos>
+		</qos_profile>
+
+		<!-- This profile enables the Turbo Mode batching and Auto Throttle 
+         experimental features. Aside from the properties that enable these
+         features (which are all false by default), all the values are set to their 
+         defaults and are shown here for reference. Turbo Mode batching adjusts
+         the maximum number of bytes of a batch, based on how frequently samples
+         are being written. Auto Throttle auto-adjusts the speed at which a 
+         writer will write samples, based on the number of unacknowledged 
+         samples in its queue.
+          
+         These features are designed to auto-adjust the publishing behavior 
+         within a system to achieve the best possible performance 
+         with regards to throughput and latency. 
+
+         Important! If you are inheriting from this profile and are writing 
+         samples smaller than 120 bytes you will fail to see 
+         communication between your DataWriters and DataReaders. This is because
+         of the batching settings in combination with the DataReader's 
+         max_samples resource limit of 256 that is inherted from the 
+         Generic.StrictReliable profile. You will need to increase this value. 
+         For a full explanation of the problem please visit -->
+    <!--qos_profile name="Batch" base_name="BuiltinQosLibExp::Generic.AutoTuning"-->
+    <qos_profile base_name="BuiltinQosLibExp::Generic.StrictReliable.HighThroughput" name="Batch">
+      <base_name>
+        <!--element>BuiltinQosSnippetLib::QosPolicy.History.KeepLast_1</element>
+        <element>BuiltinQosSnippetLib::Optimization.ReliabilityProtocol.KeepLast</element-->
+      </base_name>
+      <datawriter_qos>
+        <reliability>
+          <max_blocking_time>
+            <sec>1</sec>
+            <nanosec>0</nanosec>
+          </max_blocking_time>
+        </reliability>
+        <batch>
+          <enable>true</enable>
+          <max_data_bytes>32768</max_data_bytes>
+          <max_samples>100</max_samples>
+          <max_flush_delay>
+          <sec>0</sec>
+          <nanosec>500000</nanosec>
+          </max_flush_delay>
+        </batch>
+        <protocol>
+          <!--rtps_reliable_writer>
+          <inactivate_nonprogressing_readers>true</inactivate_nonprogressing_readers>
+          <max_send_window_size>1024</max_send_window_size>
+          <min_send_window_size>512</min_send_window_size>
+          </rtps_reliable_writer-->
+          <rtps_reliable_writer>
+          <heartbeat_period>
+            <sec>0</sec>
+            <nanosec>50000000</nanosec>
+          </heartbeat_period>
+          <fast_heartbeat_period>
+            <sec>0</sec>
+            <nanosec>5000000</nanosec>
+          </fast_heartbeat_period>
+          <late_joiner_heartbeat_period>
+            <sec>0</sec>
+            <nanosec>10000000</nanosec>
+          </late_joiner_heartbeat_period>
+          <max_heartbeat_retries>10</max_heartbeat_retries>
+          </rtps_reliable_writer>
+        </protocol>
+        <history>
+          <kind>KEEP_LAST_HISTORY_QOS</kind>
+          <depth>2</depth>
+        </history>
+        <resource_limits>
+          <initial_samples>10000</initial_samples>
+          <max_samples>20000</max_samples>
+        </resource_limits>
+      </datawriter_qos>
+      <datareader_qos>
+        <history>
+          <kind>KEEP_LAST_HISTORY_QOS</kind>
+          <depth>1</depth>
+        </history>
+        <resource_limits>
+          <initial_samples>10000</initial_samples>
+          <max_samples>10000</max_samples>
+          <max_instances>10000</max_instances>
+          <max_samples_per_instance>1</max_samples_per_instance>
+        </resource_limits>
+      </datareader_qos>
+		</qos_profile>
+
+		<qos_profile base_name="Batch" name="BatchMulti">
+			<datareader_qos>
+				<multicast>
+					<value>
+						<element>
+							<!--multicast address range is '224.0.0.0' to '239.255.255.255'-->
+							<receive_address>239.255.5.140</receive_address>
+						</element>
+					</value>
+				</multicast>
+			</datareader_qos>
+		</qos_profile>
+
+	  <qos_profile base_name="Batch" name="EffortBatch">
+		  <datawriter_qos>
+			  <reliability>
+				  <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+			  </reliability>
+		  </datawriter_qos>
+
+		  <datareader_qos>
+			  <reliability>
+				  <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+			  </reliability>
+		  </datareader_qos>
+	  </qos_profile>
+	  <qos_profile base_name="BatchMulti" name="EffortBatchMulti">
+		  <datawriter_qos>
+			  <reliability>
+				  <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+			  </reliability>
+		  </datawriter_qos>
+
+		  <datareader_qos>
+			  <reliability>
+				  <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+			  </reliability>
+		  </datareader_qos>
+	  </qos_profile>
+
+		<!-- [20200812]Send Large Data & Keep Last One-->
+		<qos_profile base_name="BuiltinQosLibExp::Generic.KeepLastReliable.LargeData.FastFlow" name="Large">
+			<datawriter_qos>
+				<publish_mode>
+					<kind>
+						ASYNCHRONOUS_PUBLISH_MODE_QOS
+					</kind>
+				</publish_mode>
+				<protocol>
+					<rtps_reliable_writer>
+						<inactivate_nonprogressing_readers>true</inactivate_nonprogressing_readers>
+						<max_send_window_size>64</max_send_window_size>
+						<min_send_window_size>32</min_send_window_size>
+						<heartbeats_per_max_samples>64</heartbeats_per_max_samples>
+						<!-- See low_watermark -->
+						<heartbeat_period>
+							<sec>0</sec>
+							<nanosec>70000000</nanosec>
+						</heartbeat_period>
+						<!-- See high_watermark -->
+						<fast_heartbeat_period>
+							<sec>0</sec>
+							<nanosec>70000000</nanosec>
+						</fast_heartbeat_period>
+						<max_heartbeat_retries>12</max_heartbeat_retries>
+					</rtps_reliable_writer>
+				</protocol>
+				<reliability>
+					<max_blocking_time>
+						<sec>1</sec>
+						<nanosec>0</nanosec>
+					</max_blocking_time>
+				</reliability>
+				<history>
+					<depth>1</depth>
+				</history>
+			</datawriter_qos>
+			<datareader_qos>
+				<history>
+					<depth>1</depth>
+				</history>
+				<resource_limits>
+					<initial_samples>128</initial_samples>
+					<!-- We limit max_samples on the reader so that if the writer is
+               publishing samples faster than the reader is taking them, then 
+               the reader will start sending NACKs for samples received after 
+               the number of samples in its queue reaches max_samples. This 
+               behavior will put pressure on the writer to throttle back its 
+               publishing speed. -->
+					<max_samples>256</max_samples>
+				</resource_limits>
+			</datareader_qos>
+		</qos_profile>
+
+		<!-- [20200812]Send Large Data & Keep Last One-->
+		<qos_profile base_name="Large" name="LargeMulti">
+			<datareader_qos>
+				<multicast>
+					<value>
+						<element>
+							<!--multicast address range is '224.0.0.0' to '239.255.255.255'-->
+							<receive_address>239.255.5.150</receive_address>
+						</element>
+					</value>
+				</multicast>
+			</datareader_qos>
+		</qos_profile>
+
+	</qos_library>
+
+<!--**********************************************PA**********************************************-->
+	
+<qos_library name="PA">
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="AC_AIRCRAFT_DIR_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="AC_AIRCRAFT_DIR_STOP"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="AC_CIVIL_AIRCRAFT_ROUTE_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="AC_HELO_APPROACH_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="AC_HELO_APPROACH_STOP"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="AC_HELO_OPRT_LIMIT_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="AC_SEPART_AIRCRAFT_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="AC_SEPART_RULE_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="AC_VECTAC_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="AC_VECTAC_STOP"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="ADSB_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="ADSB_TRACK_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="AIS_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="AIS_TRACK_DELETE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="AIS_TRACK_INFO"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="CESM_BEARING_REPORT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="CESM_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="CESM_TRACK_DELETE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="CESM_TRACK_INFO"/>
+<qos_profile base_name="PAQoSLib::EventMulti" name="CMS_ALERT_REPORT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="CMS_DIAGNOSIS_RESULT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="CMS_ENG_SENSOR_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="CMS_ENG_STAT_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="CMS_ENG_TRACK_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicMulti" name="CMS_ENG_TRK_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="CMS_ENG_WEAPON_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="CMS_ISA_ANALYSIS_MESSAGE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="CMS_PRIMITIVE_BEARING_TRACK_INFO"/>
+<qos_profile base_name="PAQoSLib::Batch" name="CMS_PRIMITIVE_POINT_TRACK_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="CMS_REDUNDANCY"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="CMS_SW_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="CMS_TORPEDO_ALERT"/>
+<qos_profile base_name="PAQoSLib::Event" name="COM_001_SELECT_TRACK_DETAIL"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="DDU_OWN_SHIP_DATA"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="DDU_OWN_SHIP_DATA_GYRO_100HZ"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="DDU_OWN_SHIP_DATA_GYRO_10HZ"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="DDU_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="DM_001_INITIALIZE"/>
+<qos_profile base_name="PAQoSLib::Event" name="DM_002_REQ_MENU"/>
+<qos_profile base_name="PAQoSLib::Event" name="DM_005_ALERT_CONTEXT_MENU"/>
+<qos_profile base_name="PAQoSLib::Event" name="DM_007_INITIALIZE_COMPLETE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_AAW_ENG_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_AAW_ENG_MODE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_AAW_QUICK_RESPONSE_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_AAW_QUICK_RESPONSE_MODE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_AAW_THREAT_FILTER_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_AAW_THREAT_LIST"/>
+<qos_profile base_name="PAQoSLib::Event" name="EC_AAW_VETO_REQ"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EC_ASUW_ENG_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_ASUW_THREAT_FILTER_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_ASUW_THREAT_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EC_ASW_SUB_ENG_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EC_ASW_SUB_THREAT_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_ASW_THREAT_FILTER_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EC_ASW_TORP_ENG_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EC_ASW_TORP_THREAT_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_ENG_CHANNEL_RECOMMEND_LIST"/>
+<qos_profile base_name="PAQoSLib::Event" name="EC_NGS_FIRE_CORRECTION_ACK"/>
+<qos_profile base_name="PAQoSLib::Event" name="EC_NGS_FIRE_POINT"/>
+<qos_profile base_name="PAQoSLib::Event" name="EC_NGS_OBSERVER_CREATE_ACK"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EC_NGS_TRACKING_SENSOR_LIST"/>
+<qos_profile base_name="PAQoSLib::Event" name="EC_SENSOR_TRK_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="EC_THREAT_SELECTION_LIST"/>
+<qos_profile base_name="PAQoSLib::Event" name="EC_WEAPON_ENG_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="ENUM_SAMPLE"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="EOSS55_TRAJECTORY_RESULTS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EOSS_VIGY4_GYRO_DRIFT_CORRECTION_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EOSS_VIGY4_PARAMETERS_RESTORE_ACKNOWLEDGE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EOSS_VIGY4_PARAMETERS_SAVE_ACKNOWLEDGE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EOSS_VIGY4_PARAMETER_VALUE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EOSS_VIGY4_REGION_OF_INTEREST_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="EOSS_VIGY4_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="GUN40_AMMO_SETTING_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="GUN40_CORRECTION_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN40_CTRL_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN40_FIRE_CONDITION_STASTUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="GUN40_FIRE_SETTING_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN40_FIRE_STASTUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="GUN40_LOADING_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="GUN40_PAC_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN40_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN40_TARGET_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="GUN40_WARNING_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN76_AMMO_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN76_AMMO_SETTING_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN76_CTRL_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN76_FIRE_LOADING_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN76_FIRE_SETTING_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN76_FIRING_CHAIN_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN76_FUZE_SETTING_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN76_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="GUN76_TARGET_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="IRST_MAGNIFIER_VIDEO_ELEMENT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="IRST_PANORAMIC_VIDEO_ELEMENT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="IRST_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="IRST_SYSTEM_STATUS2"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="IRST_TRACK_DELETE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="IRST_TRACK_INFO"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_AAW_ENG_MODE_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_AAW_QUICK_RESPONSE_MODE"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_AAW_THREAT_FILTER_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AAW_THREAT_USER_OFFSET_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_AIRCRAFT_DIR_EXEC_STOP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_AIRCRAFT_DIR_NEXT_WAYPOINT"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_CIVIL_AIRCRAFT_ROUTE"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_HELO_APPROACH_DESCENT_CHK"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_HELO_APPROACH_EXEC_STOP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_HELO_APPROACH_NEXT_WAYPOINT"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_HELO_OPRT_LIMIT"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_SEPART_AIRCRAFT"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_SEPART_RULE"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_VECTAC_EXEC_STOP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_VECTAC_NEXT_WAYPOINT"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_AC_VECTAC_TORP_DROP_CHK"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_ASUW_THREAT_FILTER_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_ASW_THREAT_FILTER_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_ENGAGEMENT_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_ENG_CHANNEL_RECOMMEND_LIST_REQ"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_EQUIP_CONNECTION_CTRL"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_CAMERA_FOCUS_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_CAMERA_FOV_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_CAMERA_MODE_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_ELEVATION_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_ELIMINATION_WINDOW_DELETE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_ELIMINATION_WINDOW_UPSERT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_ENVIRONMENT_SETTING"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_MAGNIFIER_BRIGHTNESS_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_MAGNIFIER_BROADCAST_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_MAGNIFIER_CONTRAST_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_MAGNIFIER_POSITION_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_NG_MODE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_OPTICAL_SOLAR_FILTER_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_PANORAMIC_BRIGHTNESS_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_PANORAMIC_BROADCAST_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_PANORAMIC_CONTRAST_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_REQUEST_CREATE_TRACK"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_REQUEST_DELETE_TRACK"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_STABILIZATION_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_IRST_WINDOW_CLEANING_ORDER"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_MPM_AAWP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_MPM_ALWP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_MPM_ASUWP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_MPM_ASWP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_MPM_ECP_DETAIL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_MPM_ECP_EXECUTE_STOP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_MPM_EOP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_MPM_GENP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NAVD_ANCHORING_COMPLETE_CMD"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NAVD_ANCHOR_DROP_CMD"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_COLLISION_AVOIDANCE_SET"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_COLLISION_AVOIDANCE_SIMULATION_CMD"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NAVD_COURSE_SPEED_CMD"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_CPA_EDIT"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NAVD_CROSSING_CMD"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_LOW_VISIBILITY_CMD"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NAVD_PRECISION_ANCHORING_CMD"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_RECONNAISSANCE_CMD"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_RESCUE_CMD"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NAVD_SAIL_PLAN_CHANGE_WAYPOINT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_SAIL_PLAN_CMD"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_SAIL_PLAN_EDIT"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="MFC_NAVD_SAIL_PLAN_PREVIEW"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_STATION_KEEPING_CMD"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NAVD_STATION_KEEPING_SECTOR_EDIT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_TPA_COURSE_CMD"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NAVD_ZIGZAG_PLAN_CMD"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NAVD_ZIGZAG_PLAN_EDIT"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NAVD_ZIGZAG_TEMPLATE_EDIT"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NGS_CREATE_UPDATE_REQ"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NGS_ENG_ORDER"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NGS_FIRE_CORRECTION_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NGS_OBSERVER_CREATE_REQ"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_NGS_OBSERVER_DISPLAY_REQ"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_NGS_TRACKING_SENSOR_REQ"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_RRD_RECORDING_REPLAY_CTRL"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_RRD_RECORD_INFO_EDIT"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_RRD_RECORD_SEARCH_REQ"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_RRD_TAG_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_RRD_TARGET_LIST_EDIT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SAM_ENGAGEMENT_ABORT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SAM_ENGAGEMENT_ORDER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SAM_FEASIBILITY_QUERY"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SAM_FIRE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SAM_MODE_SETTING"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_SENSD_CESM_BEARING_REPORT_REQ"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_SENSD_CESM_SIGNAL_REPORT_REQ"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_SENSD_RESM_BEARING_REPORT_REQ"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_SENSD_RESM_ECM_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_SENSD_RESM_SIGNAL_REPORT_REQ"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SKP_POWER_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SMD_BATTLESHORT_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SMD_DATETIME_SYNC_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_SMD_MODE_REQ"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SMD_ROLE_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SMD_SYSTEM_PARAMETER_MODIFY"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SMD_USER_REQ"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SSM_CEASE_FIRE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SSM_DELETE_REFERENCE_POINT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SSM_DELETE_RESTRICTION_AREA"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SSM_ENGAGEMENT_DESIGNATION"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SSM_LOCATION_POINTING"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SSM_OWN_UNIT_TRACK_NUMBER"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SSM_TARGET_POINTING"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SSM_TEXT_MESSAGE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SSM_UPSERT_REFERENCE_POINT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_SSM_UPSERT_RESTRICTION_AREA"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_AREA_WARNING"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_COV_COLOR"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_COV_DISP"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_FOC"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_HINDRANCE"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_PLATFORM_CLASS"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_PLATFORM_LIBRARY_DETAILED_INFO_REQ"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_PLATFORM_LIBRARY_SEARCH"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_PLATFORM_NATION"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_PLATFORM_SENSOR"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_PLATFORM_UNIT"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_PLATFORM_UNIT_SENSOR"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_PLATFORM_UNIT_WEAPON"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_PLATFORM_WEAPON"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_TACTICAL_AREA"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_TACTICAL_FIGURE"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SS_TARGET_PLATFORM_CONNECT"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_LIBRARY_MNG_ENTITY"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_LIBRARY_MNG_SENSOR"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_LIBRARY_MNG_WEAPON"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SCENARIO_ANAL_MNG"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SCENARIO_ANAL_SEARCH"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SCENARIO_INFO_MNG_ENTITY"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SCENARIO_INFO_MNG_EVENT"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SCENARIO_INFO_MNG_OWNSHIP"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SCENARIO_INFO_MNG_SCN"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SCENARIO_OPER_MNG_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SCENARIO_OPER_MNG_ENTITY"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SCENARIO_OPER_MNG_EVENT"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SIMULATOR_CONF_SENSOR_XXX"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SIMULATOR_CONF_WEAPON_XXX"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_STMD_SIMULATOR_MNG_SENSOR"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_STMD_SIMULATOR_MNG_WEAPON"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_SURF_KILL_CAPABILITY_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TARGET_KILL_CTRL"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_ANTENNA_ROTATION"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_CONNECTION_CONFIG"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_CURRENT_PROFILE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_FAILURE_OVERRIDE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_MAINS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_MANUALTRACK_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_MANUAL_CLUTTER_SURFACE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_MANUAL_GAIN_SURFACE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_MANUAL_STC_SURFACE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_MANUAL_TRACKER_SENSITIVITY_SURFACE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_SECTOR_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_SECTOR_TRANSMISSION"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_STATUS_REQUEST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_TRACKER_SENSITIVITY_MODE_SURFACE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_TX"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_TX_SINGLE_SCAN"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_VIDEO_PROCESSING_MODE_SURFACE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_ZONE_ABSOLUTE_POSITION_CREATE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_ZONE_ABSOLUTE_POSITION_MODIFY"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_ZONE_COMMON_MODIFY"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_ZONE_DELETE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_ZONE_RELATIVE_ANNULUS_SECTOR_CREATE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_TDR_ZONE_RELATIVE_ANNULUS_SECTOR_MODIFY"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_THREAT_SELECTION_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_TMD_2D_POS_UPDATE"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_TMD_ASW_ACTIVE_TRACK_DETAILED_EDIT_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_TMD_AUTO_ASSOCIATION_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_TMD_BEARING_TRACK_EDIT_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_BEST_MEMBER_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_TMD_MFR_TRACK_DETAILED_EDIT_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_TMD_POINT_TRACK_EDIT_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_SPECIAL_POINT_EDIT_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_TRACK_ASSOCIATION_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_TRACK_CORRELATION_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_TRACK_CREATE_DELETE_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_TRACK_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_TRACK_FUSION_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_TRACK_HISTORY_REQ"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_TRACK_JOIN_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_TRACK_PAIRING_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TMD_TRIANGULATION_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_TOPICSAMPLE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_ACQUISITION_WINDOW_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_BACKLIGHT_COMPENSATION_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_BLACK_AND_WHITE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_BRIGHTNESS_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_CALIBRATION_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_CAMERA_MODE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_CONTRAST_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_DEFOG_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_FOCUS_CONTINUOUS_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_FOCUS_CURSOR_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_FOCUS_DISTANCE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_FOCUS_MODE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_FOV_ABSOLUTE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_FOV_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_FOV_CONTINUOUS_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_FOV_PRESET_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_GYRO_DRIFT_CORRECTION_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_HIGH_SENSITIVITY_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_IMAGE_RENDERING_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_IR_CUT_REMOVAL_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_JOYSTICK_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_LOS_POSITION_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_LOS_SPEED_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_LRF_MODE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_MANUAL_FIRE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_MANUAL_NAV_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_NOISE_REDUCTION_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_PANORAMIC_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_PARAMETERS_GET_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_PARAMETERS_RESTORE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_PARAMETERS_SAVE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_PARAMETERS_SET_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_POLARITY_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_PRESET_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_REGION_OF_INTEREST_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_SCANNING_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_STEP_AND_STARE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_SYSTEM_MODE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_TD_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_TRACKING_MODE_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_VIDEO_SELECTION_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_VISIBILITY_ENHANCER_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_VIGY4_WASHER_COMMAND"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_40GUN_AMMO_SETTING"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_40GUN_CORRECTION_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_40GUN_FIRING_SETTING"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_40GUN_LOADING_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_40GUN_PAC_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_40GUN_SERVO_CTRL"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_WEAPD_76GUN_AMMO_SETTING"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_WEAPD_76GUN_FIRE_LOADING_CTRL"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_WEAPD_76GUN_FIRING_SETTING"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_WEAPD_76GUN_FUZE_SETTING"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_WEAPD_76GUN_SERVO_CTRL"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFC_WEAPD_76GUN_VULCANO_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_RCWS_DAY_CAMERA_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_RCWS_DESIGNATION_ORDER"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_RCWS_FIRING_SETTING"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_RCWS_IR_CAMERA_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_RCWS_LOADING_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_RCWS_LRF_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_RCWS_MODE_REQ"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_RCWS_SERVO_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPD_RCWS_TRACKER_CTRL"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPON_ALLOC_CTRL"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="MFC_WEAPON_RESTRICTION_CMD"/>
+<qos_profile base_name="PAQoSLib::Event" name="MFC_WEAPON_RESTRICTION_SECTOR_CTRL"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFR_TRACK_DELETE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MFR_TRACK_INFORMATION"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MPM_AAWP_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MPM_ALWP_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MPM_ASUWP_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MPM_ASWP_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MPM_ECP_DETAIL_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="MPM_EOP_LIST"/>
+<qos_profile base_name="PAQoSLib::Large" name="MPM_GENP_LIST"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_ANCHORING_COMPLETE_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_ANCHOR_DROP_ACK"/>
+<qos_profile base_name="PAQoSLib::Large" name="NAV_SUP_COLLISION_AVOIDANCE_TRACK_LIST"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_COURSE_SPEED_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="NAV_SUP_CPA_INFO_LIST"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_CROSSING_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_LOW_VISIBILITY_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_OWNSHIP_INFO"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_PRECISION_ANCHORING_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_RECONNAISSANCE_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_RESCUE_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::Large" name="NAV_SUP_SAIL_PLAN_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="NAV_SUP_SAIL_PLAN_LIST"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_SAIL_PLAN_PREVIEW"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="NAV_SUP_STATION_KEEPING_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_STATION_KEEPING_SECTOR_LIST"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_STATION_KEEPING_SECTOR_PREVIEW"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="NAV_SUP_TPA_COURSE_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_WEAPONE_MANEUVER_RECOMMEND_LIST"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_ZIGZAG_EXECUTION_INFO"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_ZIGZAG_PLAN_LIST"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="NAV_SUP_ZIGZAG_TEMPLATE_LIST"/>
+<qos_profile base_name="PAQoSLib::Event" name="PK_001_DISPLAY_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="PK_002_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="RCWS_CTRL_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="RCWS_DAY_CAMERA_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="RCWS_DESIGNATION_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="RCWS_IR_CAMERA_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="RCWS_LOADING_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="RCWS_LRF_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="RCWS_RTF_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="RCWS_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="RCWS_TRACKER_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="RCWS_WARNING_STATUS"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="RESM_BEARING_REPORT"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="RESM_ECM_MANUAL_MODE_STATUS"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="RESM_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="RESM_TRACK_DELETE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="RESM_TRACK_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="RR_RECORDING_REPLAY_STATUS"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="RR_RECORDING_TARGET_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="RR_RECORD_INFO_LIST"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="RR_STORAGE_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SAM_ENGAGEMENT_REPORT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SAM_FEASIBILITY_REPORT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SAM_MSE_REPORT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SAM_MTP_REPORT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SAM_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SC_SCA_MNG_STATUS"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="SC_SCA_SIM_SHUTDOWN"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="SC_SCENARIO_OPER_ENTITY"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="SC_SCENARIO_OPER_ENVIROMENT"/>
+<qos_profile base_name="PAQoSLib::EventKeepOneMulti" name="SC_SCENARIO_OPER_OWNSHIP"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="SC_SCENARIO_OPER_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="SC_SIMULATOR_MNG_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SIM_FIRED_AMMUNITION_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SIM_MNG_STATUS"/>
+<qos_profile base_name="PAQoSLib::Event" name="SKP_002_COMMAND"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SKP_003_ALERT_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SMD_001_ROLE_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SMD_002_SYSTEM_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="SMD_003_LOGOUT"/>
+<qos_profile base_name="PAQoSLib::Event" name="SMD_005_MESSAGE"/>
+<qos_profile base_name="PAQoSLib::Event" name="SMD_006_LOGIN_REQUEST"/>
+<qos_profile base_name="PAQoSLib::Event" name="SMD_007_LOGIN_RESULT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="SM_ACC_ROLE_LIST"/>
+<qos_profile base_name="PAQoSLib::LargeMulti" name="SM_ACC_USER_RESP"/>
+<qos_profile base_name="PAQoSLib::EventMulti" name="SM_AWM_ALERT_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SM_REDEUNDANCY"/>
+<qos_profile base_name="PAQoSLib::EventMulti" name="SM_SMA_DEPLOY_CTRL"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SM_SMA_DEPLOY_PROGRESS_REPORT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="SM_SMA_OFFLINE_MODE_REQ"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="SM_SS_DATETIME_SYNC_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="SM_SS_MFC_OPERATING_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="SM_SS_SYSTEM_PARAMETER_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="SM_SS_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_ENGAGEMENT_END"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_ENGAGEMENT_PLAN_REPORT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_HIT_ASSESSMENT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_LOCATION_POINTING"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_MISSILE_IN_AIR_LOCATION"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_SYSTEM_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_TARGETS_DETECT_BY_MISSILE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_TARGET_ENGAGED_BY_MISSILE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_TARGET_POINTING"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_TEXT_MESSAGE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SSM_UPDATED_MISSILE_TRAJECTORY"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SS_AREA_WARNING_LIST"/>
+<qos_profile base_name="PAQoSLib::Large" name="SS_COV_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SS_FOC_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SS_HINDRANCE_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="SS_PLATFORM_LIBRARY"/>
+<qos_profile base_name="PAQoSLib::Event" name="SS_PLATFORM_LIBRARY_SEARCH_RESULT"/>
+<qos_profile base_name="PAQoSLib::Event" name="SS_PLATFORM_LIBRARY_SEARCH_RESULT_DETAIL"/>
+<qos_profile base_name="PAQoSLib::Event" name="SS_PLATFORM_LIBRARY_TARGET_CONNECT_INFO"/>
+<qos_profile base_name="PAQoSLib::Large" name="SS_TACTICAL_AREA_LIST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_LIBRARY_LIST_ENTITY"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_LIBRARY_LIST_SENSOR"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_LIBRARY_LIST_WEAPON"/>
+<qos_profile base_name="PAQoSLib::Event" name="STM_LIBRARY_MNG_RST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_OVERLAY_DISP_ROUTE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_OVERLAY_DISP_TRACE"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="STM_SCENARIO_ANAL_LIST"/>
+<qos_profile base_name="PAQoSLib::Event" name="STM_SCENARIO_ANAL_MNG_RST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_SCENARIO_INFO_EDIT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_SCENARIO_INFO_LIST"/>
+<qos_profile base_name="PAQoSLib::Event" name="STM_SCENARIO_INFO_MNG_RST"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="STM_SCENARIO_OPER_ENTITY"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="STM_SCENARIO_OPER_ENVIROMENT"/>
+<qos_profile base_name="PAQoSLib::Event" name="STM_SCENARIO_OPER_EVENT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_SCENARIO_OPER_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="STM_SCENARIO_OPER_MNG_RST"/>
+<qos_profile base_name="PAQoSLib::EventKeepOneMulti" name="STM_SCENARIO_OPER_OWNSHIP"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="STM_SCENARIO_OPER_STATUS"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="STM_SIMULATOR_CONF_CTRL_SENSOR_XXX"/>
+<qos_profile base_name="PAQoSLib::EventKeepOne" name="STM_SIMULATOR_CONF_CTRL_WEAPON_XXX"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_SIMULATOR_CONF_STAT_SENSOR"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_SIMULATOR_CONF_STAT_WEAPON"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STM_SIMULATOR_INFO_MNG"/>
+<qos_profile base_name="PAQoSLib::Event" name="STM_SIMULATOR_MNG_RST"/>
+<qos_profile base_name="PAQoSLib::Event" name="STM_SIMULATOR_OPER_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STSIM_CONF_STAT_SENSOR_XXX"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STSIM_CONF_STAT_WEAPON_XXX"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STSIM_INFO_STAT_SENSOR"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="STSIM_INFO_STAT_WEAPON"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_001_SELECT_TRACK"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_003_SELECT_POINT"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_004_IMAGE_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_005_DELETE_IMAGE"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_006_SELECT_OBJECT"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_007_REQ_CONTEXT_MENU"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_008_EDIT_MODE"/>
+<qos_profile base_name="PAQoSLib::Batch" name="TCD_009_OVERLAY_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_010_DELETE_OVERLAY"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TCD_011_RADAR_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_012_DISPLAY_RADAR"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_013_CONTEXT_LIST"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_014_DRAWING_RESULT"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_015_DISPLAY_OVERLAY"/>
+<qos_profile base_name="PAQoSLib::Batch" name="TCD_016_ETC_SYMBOL_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="TCD_017_DELETE_ETC_SYMBOL"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TCD_018_CURSOR_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TCD_019_OWNSHIP_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_CONTROL_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_MANUAL_TRACK_ALL_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_MANUAL_TRACK_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_MSGERROR"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_PROFILE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_SECTOR_ALL_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_SECTOR_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_SENSITIVITY_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_SETTING_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_ZONE_ABSOLUTE_POSITION_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="TDR_ZONE_RELATIVE_ANNULUS_SECTOR_STATUS"/>
+<qos_profile base_name="PAQoSLib::Batch" name="TD_001_TRACK_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="TD_002_DELETE_TRACK"/>
+<qos_profile base_name="PAQoSLib::Event" name="TD_003_TRACK_ASSOCIATION_PAIRING"/>
+<qos_profile base_name="PAQoSLib::Event" name="TD_004_TRACK_HISTORY"/>
+<qos_profile base_name="PAQoSLib::Event" name="TD_005_TRACK_EDIT_STATUS"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_AAW_ASUW_TRACK_TDL_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_ASW_ACTIVE_TRACK_DETAILED_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_ASW_ACTIVE_TRACK_TDL_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_ASW_PASSIVE_TRACK_DETAILED_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_ASW_PASSIVE_TRACK_TDL_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_AUTO_ASSOCIATION_INFO"/>
+<qos_profile base_name="PAQoSLib::EffortBatchMulti" name="TM_BEARING_TRACK"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_EW_TRACK_DETAILED_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_EW_TRACK_TDL_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_IR_TRACK_DETAILED_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_IR_TRACK_TDL_INFO"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_MFR_TRACK_DETAILED_INFO"/>
+<qos_profile base_name="PAQoSLib::Event" name="TM_NGS_CREATE_ACK"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_PIM_LEG_INFO"/>
+<qos_profile base_name="PAQoSLib::EffortBatchMulti" name="TM_POINT_TRACK"/>
+<qos_profile base_name="PAQoSLib::EffortBatchMulti" name="TM_SPECIAL_POINT"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_SURF_KILL_CAPABILITY"/>
+<qos_profile base_name="PAQoSLib::EventMulti" name="TM_TRACK_HISTORY_INFO"/>
+<qos_profile base_name="PAQoSLib::EventMulti" name="TM_TTN_CHANGE"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOneMulti" name="TM_WEAPON_RESTRICTION_SECTOR"/>
+<qos_profile base_name="PAQoSLib::PeriodicKeepOne" name="UST_001_SET_UNIT"/>
+<qos_profile base_name="PAQoSLib::Periodic" name="WPN_NAVD_MANEUVER_RECOMMEND"/>
+</qos_library>
+</dds>

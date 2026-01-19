@@ -1,0 +1,74 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="Color_Popup450_Outline">#41719C</Color>
+    <Color x:Key="Color_Popup450_Bg">#0000</Color>
+    <Color x:Key="Color_Popup450_Headline">#1F497D</Color>
+    <Color x:Key="Color_Popup640_Outline">#FF576577</Color>
+    <Color x:Key="Color_Popup640_Bg">#FF2A3747</Color>
+    <Color x:Key="Color_Popup640_Headline">#FF202A36</Color>
+    <Color x:Key="Color_Popup640_Bodytitle">#FFCACACA</Color>
+    <Color x:Key="Color_Popup640_TextDisable">#FF959595</Color>
+    <Color x:Key="Color_PopupMenu_Outline">#FF576577</Color>
+    <Color x:Key="Color_ButtonBasic_Outline">#FF1A2026</Color>
+    <Color x:Key="Color_ButtonBasic_BgTop">#FF2A3747</Color>
+    <Color x:Key="Color_ButtonBasic_BgBottom">#FF181F28</Color>
+    <Color x:Key="Color_ButtonMenu_Check">#FF11171D</Color>
+    <Color x:Key="Color_RadioButton_CenterBg">#FF4D92E1</Color>
+    <Color x:Key="Color_RadioButton_Bg">#FF1A232D</Color>
+    <Color x:Key="Color_RadioButton_TabText">#FF959595</Color>
+    <Color x:Key="Color_ToggleButton_Check">#FF00377B</Color>
+    <Color x:Key="Color_ToggleButton_Disable">#FF2E353D</Color>
+    <Color x:Key="Color_ScrollBarLineButton_UpDown">#FFB6B6B6</Color>
+    <Color x:Key="Color_ScrollBarLineButton_Sel">#FF475E7B</Color>
+    <Color x:Key="Color_Confirm">#FF009A00</Color>
+    <Color x:Key="Color_Alert">#FFEF0000</Color>
+    <Color x:Key="Color_Warning">#FFC5AB14</Color>
+    <Color x:Key="Color_ButtonImage_Top">#FF283340</Color>
+    <Color x:Key="Color_ButtonImage_Bottom">#FF313F4E</Color>
+    <Color x:Key="Color_Button_Foreround">#FFFFFFFF</Color>
+    <Color x:Key="Color_TextBlock_Status">#FFE6E6E6</Color>
+    <Color x:Key="Color_BorderOn_Outline">#FF1A2026</Color>
+    <Color x:Key="Color_SegUnselected">#FF11171D</Color>
+    <Color x:Key="Color_SegSelected">#FF1A2026</Color>
+    <Color x:Key="Color_ThumbInnerRing">#30FFFFFF</Color>
+    <Color x:Key="Color_Disable_Bg">#FF222D3A</Color>
+    <Color x:Key="Color_Disable_Outline">#FF222C36</Color>
+    <Color x:Key="Color_Disable_Text">#FF777777</Color>
+
+    <SolidColorBrush x:Key="Brush_Popup450_Outline" Color="{StaticResource Color_Popup450_Outline}"/>
+    <SolidColorBrush x:Key="Brush_Popup450_Bg" Color="{StaticResource Color_Popup450_Bg}"/>
+    <SolidColorBrush x:Key="Brush_Popup450_Headline" Color="{StaticResource Color_Popup450_Headline}"/>
+    <SolidColorBrush x:Key="Brush_Popup640_Outline" Color="{StaticResource Color_Popup640_Outline}"/>
+    <SolidColorBrush x:Key="Brush_Popup640_Bg" Color="{StaticResource Color_Popup640_Bg}"/>
+    <SolidColorBrush x:Key="Brush_Popup640_Headline" Color="{StaticResource Color_Popup640_Headline}"/>
+    <SolidColorBrush x:Key="Brush_Popup640_Bodytitle" Color="{StaticResource Color_Popup640_Bodytitle}"/>
+    <SolidColorBrush x:Key="Brush_Popup640_TextDisable" Color="{StaticResource Color_Popup640_TextDisable}"/>
+    <SolidColorBrush x:Key="Brush_PopupMenu_Outline" Color="{StaticResource Color_PopupMenu_Outline}"/>
+    <SolidColorBrush x:Key="Brush_ButtonBasic_Outline" Color="{StaticResource Color_ButtonBasic_Outline}"/>
+    <SolidColorBrush x:Key="Brush_ButtonBasic_BgTop" Color="{StaticResource Color_ButtonBasic_BgTop}"/>
+    <SolidColorBrush x:Key="Brush_ButtonBasic_BgBottom" Color="{StaticResource Color_ButtonBasic_BgBottom}"/>
+    <SolidColorBrush x:Key="Brush_ButtonMenu_Check" Color="{StaticResource Color_ButtonMenu_Check}"/>
+    <SolidColorBrush x:Key="Brush_RadioButton_CenterBg" Color="{StaticResource Color_RadioButton_CenterBg}"/>
+    <SolidColorBrush x:Key="Brush_RadioButton_Bg" Color="{StaticResource Color_RadioButton_Bg}"/>
+    <SolidColorBrush x:Key="Brush_RadioButton_TabText" Color="{StaticResource Color_RadioButton_TabText}"/>
+    <SolidColorBrush x:Key="Brush_ToggleButton_Check" Color="{StaticResource Color_ToggleButton_Check}"/>
+    <SolidColorBrush x:Key="Brush_ToggleButton_Disable" Color="{StaticResource Color_ToggleButton_Disable}"/>
+    <SolidColorBrush x:Key="Brush_ScrollBarLineButton_UpDown" Color="{StaticResource Color_ScrollBarLineButton_UpDown}"/>
+    <SolidColorBrush x:Key="Brush_ScrollBarLineButton_Sel" Color="{StaticResource Color_ScrollBarLineButton_Sel}"/>
+    <SolidColorBrush x:Key="Brush_Confirm" Color="{StaticResource Color_Confirm}"/>
+    <SolidColorBrush x:Key="Brush_Alert" Color="{StaticResource Color_Alert}"/>
+    <SolidColorBrush x:Key="Brush_Warning" Color="{StaticResource Color_Warning}"/>
+    <SolidColorBrush x:Key="Brush_Button_Forground" Color="{StaticResource Color_Button_Foreround}"/>
+    <SolidColorBrush x:Key="Brush_TextBlock_Status" Color="{StaticResource Color_TextBlock_Status}"/>
+    <SolidColorBrush x:Key="Brush_BorderOn_Outline" Color="{StaticResource Color_BorderOn_Outline}"/>
+    <SolidColorBrush x:Key="Brush_Disable_Bg" Color="{StaticResource Color_Disable_Bg}"/>
+    <SolidColorBrush x:Key="Brush_Disable_Outline" Color="{StaticResource Color_Disable_Outline}"/>
+    <SolidColorBrush x:Key="Brush_Disable_Text" Color="{StaticResource Color_Disable_Text}"/>
+
+
+    <SolidColorBrush x:Key="Brush_SegUnselected" Color="{StaticResource Color_SegUnselected}"/>
+    <SolidColorBrush x:Key="Brush_SegSelected" Color="{StaticResource Color_SegSelected}"/>
+    <SolidColorBrush x:Key="Brush_ThumbInnerRing" Color="{StaticResource Color_ThumbInnerRing}"/>
+    
+</ResourceDictionary>

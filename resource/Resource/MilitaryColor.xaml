@@ -1,0 +1,476 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="Color_MainBackground">#2A3747</Color>
+    <Color x:Key="Color_MainSecondary">#11171D</Color>
+
+    
+    <Color x:Key="Color_PopupBackground">#2A3747</Color>
+    <Color x:Key="Color_PopupStroke">#576577</Color>
+
+    
+    <Color x:Key="Color_HeadlineBackground">#202A36</Color>
+    <Color x:Key="Color_ActionBarBackground">#801A232D</Color>
+
+    
+    <Color x:Key="Color_IconDefault">#CACACA</Color>
+    
+    <Color x:Key="Color_IconStrokeDefault">#E6E6E6</Color>
+
+    
+    <Color x:Key="Color_TextDefault">#FFFFFF</Color>
+    <Color x:Key="Color_TextDark">#959595</Color>
+    <Color x:Key="Color_TextDisabled">#777777</Color>
+    <Color x:Key="Color_TextListItemEnabled">#CACACA</Color>
+    <Color x:Key="Color_TextListItemDisabled">#69737E</Color>
+
+    
+    <Color x:Key="Color_ButtonEnabled">#2A3747</Color>
+    <Color x:Key="Color_ButtonEnabledSecondary">#181F28</Color>
+    <Color x:Key="Color_ButtonDisabled">#232E3B</Color>
+    <Color x:Key="Color_ButtonDisabledSecondary">#141A21</Color>
+    <Color x:Key="Color_ButtonHover">#475E7B</Color>
+    <Color x:Key="Color_ButtonHoverSecondary">#2A3747</Color>
+    <Color x:Key="Color_ButtonPressed">#222D3A</Color>
+    <Color x:Key="Color_ButtonPressedSecondary">#384A61</Color>
+
+    <Color x:Key="Color_ButtonStrokeEnabled">#1A2026</Color>
+    <Color x:Key="Color_ButtonStrokeDisabled">#1A2026</Color>
+    <Color x:Key="Color_ButtonStrokeHover">#661A2026</Color>
+    <Color x:Key="Color_ButtonStrokePressed">#CC1A2026</Color>
+
+    
+    <Color x:Key="Color_RadioButtonEnabled">#1A232D</Color>
+    <Color x:Key="Color_RadioButtonDisabled">#222D3A</Color>
+    <Color x:Key="Color_RadioButtonHover">#1A232D</Color>
+
+    <Color x:Key="Color_RadioButtonStrokeEnabled">#1A2026</Color>
+    <Color x:Key="Color_RadioButtonStrokeDisabled">#222C36</Color>
+    <Color x:Key="Color_RadioButtonStrokeHover">#804D92E1</Color>
+
+    <Color x:Key="Color_RadioButtonCheckerEnabled">#4D92E1</Color>
+    <Color x:Key="Color_RadioButtonCheckerDisabled">#664D92E1</Color>
+    <Color x:Key="Color_RadioButtonCheckerHover">#4D92E1</Color>
+
+    
+    <Color x:Key="Color_ToggleButtonEnabled">#2A3742</Color>
+    <Color x:Key="Color_ToggleButtonEnabledSecondary">#475E7B</Color>
+    <Color x:Key="Color_ToggleButtonDisabled">#2A3747</Color>
+    <Color x:Key="Color_ToggleButtonDisabledSecondary">#181F28</Color>
+
+    <Color x:Key="Color_ToggleButtonStrokeEnabled">#1A2026</Color>
+    <Color x:Key="Color_ToggleButtonStrokeDisabled">#1A2026</Color>
+
+    <Color x:Key="Color_ToggleButtonBackgroundEnabled">#11171D</Color>
+    <Color x:Key="Color_ToggleButtonBackgroundDisabled">#11171D</Color>
+
+    <Color x:Key="Color_ToggleButtonHighlightEnabled">#11171D</Color>
+    <Color x:Key="Color_ToggleButtonHighlightDisabled">#11171D</Color>
+    <Color x:Key="Color_ToggleButtonHighlightHover">#804D92E1</Color>
+
+    
+    <Color x:Key="Color_CheckBoxEnabled">#1A232D</Color>
+    <Color x:Key="Color_CheckBoxDisabled">#222D3A</Color>
+    <Color x:Key="Color_CheckBoxHover">#1A232D</Color>
+
+    <Color x:Key="Color_CheckBoxStrokeEnabled">#1A2026</Color>
+    <Color x:Key="Color_CheckBoxStrokeDisabled">#222C36</Color>
+    <Color x:Key="Color_CheckBoxStrokeHover">#804D92E1</Color>
+
+    <Color x:Key="Color_CheckBoxCheckerEnabled">#4D92E1</Color>
+    <Color x:Key="Color_CheckBoxCheckerDisabled">#664D92E1</Color>
+    <Color x:Key="Color_CheckBoxCheckerHover">#4D92E1</Color>
+
+    
+    <Color x:Key="Color_TabEnabled">#1A232D</Color>
+    <Color x:Key="Color_TabDisabled">#222D3A</Color>
+    <Color x:Key="Color_TabHover">#1A232D</Color>
+    <Color x:Key="Color_TabHoverSecondary">#2A3747</Color>
+    <Color x:Key="Color_TabPressed">#2A3747</Color>
+
+    <Color x:Key="Color_TabStrokeEnabled">#14FFFFFF</Color>
+    <Color x:Key="Color_TabStrokeDisabled">#00FFFFFF</Color>
+    <Color x:Key="Color_TabStrokeHover">#29FFFFFF</Color>
+    <Color x:Key="Color_TabStrokePressed">#4CFFFFFF</Color>
+
+    
+    <Color x:Key="Color_TextBoxEnabled">#1A232D</Color>
+    <Color x:Key="Color_TextBoxDisabled">#222C36</Color>
+    <Color x:Key="Color_TextBoxHover">#1A232D</Color>
+    <Color x:Key="Color_TextBoxAction">#213246</Color>
+
+    <Color x:Key="Color_TextBoxStrokeEnabled">#1A2026</Color>
+    <Color x:Key="Color_TextBoxStrokeDisabled">#222D3A</Color>
+    <Color x:Key="Color_TextBoxStrokeHover">#804D92E1</Color>
+    <Color x:Key="Color_TextBoxStrokeAction">#4D92E1</Color>
+
+    <Color x:Key="Color_TextBoxCaret">#4091BB</Color>
+
+
+    <Color x:Key="Color_ActionBarTextBoxEnabled">#1AFFFFFF</Color>
+
+
+    <Color x:Key="Color_ComboBoxEnabled">#1A232D</Color>
+    <Color x:Key="Color_ComboBoxDisabled">#222C36</Color>
+    <Color x:Key="Color_ComboBoxHover">#1A232D</Color>
+    <Color x:Key="Color_ComboBoxPressed">#213246</Color>
+
+    <Color x:Key="Color_ComboBoxStrokeEnabled">#1A2026</Color>
+    <Color x:Key="Color_ComboBoxStrokeDisabled">#222D3A</Color>
+    <Color x:Key="Color_ComboBoxStrokeHover">#804D92E1</Color>
+    <Color x:Key="Color_ComboBoxStrokePressed">#4D92E1</Color>
+
+    <Color x:Key="Color_ComboBoxBadgeEnabled">#FFFFFF</Color>
+    <Color x:Key="Color_ComboBoxBadgeDisabled">#777777</Color>
+    <Color x:Key="Color_ComboBoxBadgeHover">#FFFFFF</Color>
+    <Color x:Key="Color_ComboBoxBadgePressed">#FFFFFF</Color>
+
+
+    <Color x:Key="Color_ScrollViewerBackground">#1A2026</Color>
+    <Color x:Key="Color_ScrollViewerScrollBackground">#202A36</Color>
+
+
+    <Color x:Key="Color_ListItemEnabled">#263240</Color>
+    <Color x:Key="Color_ListItemDisabled">#2A3747</Color>
+    <Color x:Key="Color_ListItemHover">#1D3857</Color>
+    <Color x:Key="Color_ListItemPressed">#00377B</Color>
+
+    <Color x:Key="Color_ListItemStrokeEnabled">#263240</Color>
+    <Color x:Key="Color_ListItemStrokeDisabled">#2A3747</Color>
+    <Color x:Key="Color_ListItemStrokeHover">#334C67</Color>
+    <Color x:Key="Color_ListItemStrokePressed">#194B88</Color>
+
+
+    <Color x:Key="Color_SkpButtonEnabled">#2A3747</Color>
+    <Color x:Key="Color_SkpButtonDisabled">#2A3747</Color>
+    <Color x:Key="Color_SkpButtonHover">#2A3747</Color>
+    <Color x:Key="Color_SkpButtonPressed">#00377B</Color>
+
+    <Color x:Key="Color_SkpButtonStrokeEnabled">#1A2026</Color>
+    <Color x:Key="Color_SkpButtonStrokeDisabled">#1A2026</Color>
+    <Color x:Key="Color_SkpButtonStrokeHover">#1A2026</Color>
+    <Color x:Key="Color_SkpButtonStrokePressed">#80B7FF</Color>
+
+    
+    <Color x:Key="Color_DividerH1W2">#202A36</Color>
+    <Color x:Key="Color_DividerH2Top">#1A232D</Color>
+    <Color x:Key="Color_DividerH2Bottom">#1AFFFFFF</Color>
+    <Color x:Key="Color_DividerWhite75">#BFFFFFFF</Color>
+
+    
+    <Color x:Key="Color_StatusInfo">#009A00</Color>
+    <Color x:Key="Color_StatusWarning">#C5AB14</Color>
+    <Color x:Key="Color_StatusAlert">#EF0000</Color>
+    <Color x:Key="Color_StatusUnknown">#959595</Color>
+
+    <Color x:Key="Color_StatusInfoLight">#92D050</Color>
+
+    <Color x:Key="Color_TmPending">#FFDE21</Color>
+    <Color x:Key="Color_TmUnknown">#FFDE21</Color>
+    <Color x:Key="Color_TmKeepLost">#FFDE21</Color>
+    <Color x:Key="Color_TmFriend">#0095FF</Color>
+    <Color x:Key="Color_TmAssumedFriend">#0095FF</Color>
+    <Color x:Key="Color_TmHostile">#EF0000</Color>
+    <Color x:Key="Color_TmSuspect">#EF0000</Color>
+    <Color x:Key="Color_TmMiss">#EF0000</Color>
+    <Color x:Key="Color_TmLost">#EF0000</Color>
+    <Color x:Key="Color_TmNeutral">#009A00</Color>
+    <Color x:Key="Color_TmHit">#009A00</Color>
+    <Color x:Key="Color_TmNormal">#009A00</Color>
+    <Color x:Key="Color_TmClear">#009A00</Color>
+    <Color x:Key="Color_TmHoldFire">#FF9500</Color>
+    <Color x:Key="Color_TmVeto">#FF9500</Color>
+
+
+
+    <SolidColorBrush x:Key="Brush_MainBackground"
+                     Color="{StaticResource Color_MainBackground}"/>
+    <SolidColorBrush x:Key="Brush_MainSecondary"
+                     Color="{StaticResource Color_MainSecondary}"/>
+
+    
+    <SolidColorBrush x:Key="Brush_PopupBackground"
+                     Color="{StaticResource Color_PopupBackground}"/>
+    <SolidColorBrush x:Key="Brush_PopupStroke"
+                     Color="{StaticResource Color_PopupStroke}"/>
+
+    
+    <SolidColorBrush x:Key="Brush_HeadlineBackground"
+                     Color="{StaticResource Color_HeadlineBackground}"/>
+    <SolidColorBrush x:Key="Brush_ActionBarBackground"
+                     Color="{StaticResource Color_ActionBarBackground}"/>
+
+
+    <SolidColorBrush x:Key="Brush_IconDefault"
+                     Color="{StaticResource Color_IconDefault}"/>
+
+    <SolidColorBrush x:Key="Brush_IconStrokeDefault"
+                     Color="{StaticResource Color_IconStrokeDefault}"/>
+
+
+    <SolidColorBrush x:Key="Brush_TextDefault"
+                     Color="{StaticResource Color_TextDefault}"/>
+    <SolidColorBrush x:Key="Brush_TextDark"
+                     Color="{StaticResource Color_TextDark}"/>
+    <SolidColorBrush x:Key="Brush_TextDisabled"
+                     Color="{StaticResource Color_TextDisabled}"/>
+    <SolidColorBrush x:Key="Brush_TextListItemEnabled"
+                     Color="{StaticResource Color_TextListItemEnabled}"/>
+    <SolidColorBrush x:Key="Brush_TextListItemDisabled"
+                     Color="{StaticResource Color_TextListItemDisabled}"/>
+
+    
+    <LinearGradientBrush x:Key="Brush_ButtonEnabled"
+                         StartPoint="0, 0"
+                         EndPoint="0, 1">
+        <GradientStop Offset="0"
+                      Color="{StaticResource Color_ButtonEnabled}"/>
+        <GradientStop Offset="1"
+                      Color="{StaticResource Color_ButtonEnabledSecondary}"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Brush_ButtonDisabled"
+                         StartPoint="0, 0"
+                         EndPoint="0, 1">
+        <GradientStop Offset="0"
+                      Color="{StaticResource Color_ButtonDisabled}"/>
+        <GradientStop Offset="1"
+                      Color="{StaticResource Color_ButtonDisabledSecondary}"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Brush_ButtonHover"
+                         StartPoint="0, 0"
+                         EndPoint="0, 1">
+        <GradientStop Offset="0"
+                      Color="{StaticResource Color_ButtonHover}"/>
+        <GradientStop Offset="1"
+                      Color="{StaticResource Color_ButtonHoverSecondary}"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="Brush_ButtonHoverSolid"
+                     Color="{StaticResource Color_ButtonHover}"/>
+
+    <LinearGradientBrush x:Key="Brush_ButtonPressed"
+                         StartPoint="0, 0"
+                         EndPoint="0, 1">
+        <GradientStop Offset="0"
+                      Color="{StaticResource Color_ButtonPressed}"/>
+        <GradientStop Offset="1"
+                      Color="{StaticResource Color_ButtonPressedSecondary}"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="Brush_ButtonPressedSolid"
+                     Color="{StaticResource Color_ButtonPressed}"/>
+    
+    <SolidColorBrush x:Key="Brush_ButtonStrokeEnabled"
+                     Color="{StaticResource Color_ButtonStrokeEnabled}"/>
+    <SolidColorBrush x:Key="Brush_ButtonStrokeDisabled"
+                     Color="{StaticResource Color_ButtonStrokeDisabled}"/>
+    <SolidColorBrush x:Key="Brush_ButtonStrokeHover"
+                     Color="{StaticResource Color_ButtonStrokeHover}"/>
+    <SolidColorBrush x:Key="Brush_ButtonStrokePressed"
+                     Color="{StaticResource Color_ButtonStrokePressed}"/>
+
+    
+    <SolidColorBrush x:Key="Brush_RadioButtonEnabled"
+                     Color="{StaticResource Color_RadioButtonEnabled}"/>
+    <SolidColorBrush x:Key="Brush_RadioButtonDisabled"
+                     Color="{StaticResource Color_RadioButtonDisabled}"/>
+    <SolidColorBrush x:Key="Brush_RadioButtonHover"
+                     Color="{StaticResource Color_RadioButtonHover}"/>
+    
+    <SolidColorBrush x:Key="Brush_RadioButtonStrokeEnabled"
+                     Color="{StaticResource Color_RadioButtonStrokeEnabled}"/>
+    <SolidColorBrush x:Key="Brush_RadioButtonStrokeDisabled"
+                     Color="{StaticResource Color_RadioButtonStrokeDisabled}"/>
+    <SolidColorBrush x:Key="Brush_RadioButtonStrokeHover"
+                     Color="{StaticResource Color_RadioButtonStrokeHover}"/>
+
+    <SolidColorBrush x:Key="Brush_RadioButtonCheckerEnabled"
+                     Color="{StaticResource Color_RadioButtonCheckerEnabled}"/>
+    <SolidColorBrush x:Key="Brush_RadioButtonCheckerDisabled"
+                     Color="{StaticResource Color_RadioButtonCheckerDisabled}"/>
+    <SolidColorBrush x:Key="Brush_RadioButtonCheckerHover"
+                     Color="{StaticResource Color_RadioButtonCheckerHover}"/>
+
+    
+    <LinearGradientBrush x:Key="Brush_ToggleButtonEnabled"
+                         StartPoint="0, 0"
+                         EndPoint="0, 1">
+        <GradientStop Offset="0"
+                      Color="{StaticResource Color_ToggleButtonEnabled}"/>
+        <GradientStop Offset="1"
+                      Color="{StaticResource Color_ToggleButtonEnabledSecondary}"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Brush_ToggleButtonDisabled"
+                         StartPoint="0, 0"
+                         EndPoint="0, 1">
+        <GradientStop Offset="0"
+                      Color="{StaticResource Color_ToggleButtonDisabled}"/>
+        <GradientStop Offset="1"
+                      Color="{StaticResource Color_ToggleButtonDisabledSecondary}"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="Brush_ToggleButtonStrokeEnabled"
+                     Color="{StaticResource Color_ToggleButtonStrokeEnabled}"/>
+    <SolidColorBrush x:Key="Brush_ToggleButtonStrokeDisabled"
+                     Color="{StaticResource Color_ToggleButtonStrokeDisabled}"/>
+
+    <SolidColorBrush x:Key="Brush_ToggleButtonBackgroundEnabled"
+                     Color="{StaticResource Color_ToggleButtonBackgroundEnabled}"/>
+    <SolidColorBrush x:Key="Brush_ToggleButtonBackgroundDisabled"
+                     Color="{StaticResource Color_ToggleButtonBackgroundDisabled}"/>
+
+    <SolidColorBrush x:Key="Brush_ToggleButtonHighlightEnabled"
+                     Color="{StaticResource Color_ToggleButtonHighlightEnabled}"/>
+    <SolidColorBrush x:Key="Brush_ToggleButtonHighlightDisabled"
+                     Color="{StaticResource Color_ToggleButtonHighlightDisabled}"/>
+    <SolidColorBrush x:Key="Brush_ToggleButtonHighlightHover"
+                     Color="{StaticResource Color_ToggleButtonHighlightHover}"/>
+
+    
+    <SolidColorBrush x:Key="Brush_CheckBoxEnabled"
+                     Color="{StaticResource Color_CheckBoxEnabled}"/>
+    <SolidColorBrush x:Key="Brush_CheckBoxDisabled"
+                     Color="{StaticResource Color_CheckBoxDisabled}"/>
+    <SolidColorBrush x:Key="Brush_CheckBoxHover"
+                     Color="{StaticResource Color_CheckBoxHover}"/>
+
+    <SolidColorBrush x:Key="Brush_CheckBoxStrokeEnabled"
+                     Color="{StaticResource Color_CheckBoxStrokeEnabled}"/>
+    <SolidColorBrush x:Key="Brush_CheckBoxStrokeDisabled"
+                     Color="{StaticResource Color_CheckBoxStrokeDisabled}"/>
+    <SolidColorBrush x:Key="Brush_CheckBoxStrokeHover"
+                     Color="{StaticResource Color_CheckBoxStrokeHover}"/>
+
+    <SolidColorBrush x:Key="Brush_CheckBoxCheckerEnabled"
+                     Color="{StaticResource Color_CheckBoxCheckerEnabled}"/>
+    <SolidColorBrush x:Key="Brush_CheckBoxCheckerDisabled"
+                     Color="{StaticResource Color_CheckBoxCheckerDisabled}"/>
+    <SolidColorBrush x:Key="Brush_CheckBoxCheckerHover"
+                     Color="{StaticResource Color_CheckBoxCheckerHover}"/>
+
+    
+    <SolidColorBrush x:Key="Brush_TabEnabled"
+                     Color="{StaticResource Color_TabEnabled}"/>
+    <SolidColorBrush x:Key="Brush_TabDisabled"
+                     Color="{StaticResource Color_TabDisabled}"/>
+    <LinearGradientBrush x:Key="Brush_TabHover"
+                         StartPoint="0, 0"
+                         EndPoint="0, 1">
+        <GradientStop Offset="0"
+                      Color="{StaticResource Color_TabHover}"/>
+        <GradientStop Offset="1"
+                      Color="{StaticResource Color_TabHoverSecondary}"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="Brush_TabPressed"
+                     Color="{StaticResource Color_TabPressed}"/>
+
+    <SolidColorBrush x:Key="Brush_TabStrokeEnabled"
+                     Color="{StaticResource Color_TabStrokeEnabled}"/>
+    <SolidColorBrush x:Key="Brush_TabStrokeDisabled"
+                     Color="{StaticResource Color_TabStrokeDisabled}"/>
+    <SolidColorBrush x:Key="Brush_TabStrokeHover"
+                     Color="{StaticResource Color_TabStrokeHover}"/>
+    <SolidColorBrush x:Key="Brush_TabStrokePressed"
+                     Color="{StaticResource Color_TabStrokePressed}"/>
+
+    
+    <SolidColorBrush x:Key="Brush_TextBoxEnabled"
+                     Color="{StaticResource Color_TextBoxEnabled}"/>
+    <SolidColorBrush x:Key="Brush_TextBoxDisabled"
+                     Color="{StaticResource Color_TextBoxDisabled}"/>
+    <SolidColorBrush x:Key="Brush_TextBoxHover"
+                     Color="{StaticResource Color_TextBoxHover}"/>
+    <SolidColorBrush x:Key="Brush_TextBoxAction"
+                     Color="{StaticResource Color_TextBoxAction}"/>
+
+    <SolidColorBrush x:Key="Brush_TextBoxStrokeEnabled"
+                     Color="{StaticResource Color_TextBoxStrokeEnabled}"/>
+    <SolidColorBrush x:Key="Brush_TextBoxStrokeDisabled"
+                     Color="{StaticResource Color_TextBoxStrokeDisabled}"/>
+    <SolidColorBrush x:Key="Brush_TextBoxStrokeHover"
+                     Color="{StaticResource Color_TextBoxStrokeHover}"/>
+    <SolidColorBrush x:Key="Brush_TextBoxStrokeAction"
+                     Color="{StaticResource Color_TextBoxStrokeAction}"/>
+
+    <SolidColorBrush x:Key="Brush_TextBoxCaret"
+                     Color="{StaticResource Color_TextBoxCaret}"/>
+
+
+    <SolidColorBrush x:Key="Brush_ActionBarTextBoxEnabled"
+                     Color="{StaticResource Color_ActionBarTextBoxEnabled}"/>
+
+
+    <SolidColorBrush x:Key="Brush_ComboBoxEnabled"
+                     Color="{StaticResource Color_ComboBoxEnabled}"/>
+    <SolidColorBrush x:Key="Brush_ComboBoxDisabled"
+                     Color="{StaticResource Color_ComboBoxDisabled}"/>
+    <SolidColorBrush x:Key="Brush_ComboBoxHover"
+                     Color="{StaticResource Color_ComboBoxHover}"/>
+    <SolidColorBrush x:Key="Brush_ComboBoxPressed"
+                     Color="{StaticResource Color_ComboBoxPressed}"/>
+
+    <SolidColorBrush x:Key="Brush_ComboBoxStrokeEnabled"
+                     Color="{StaticResource Color_ComboBoxStrokeEnabled}"/>
+    <SolidColorBrush x:Key="Brush_ComboBoxStrokeDisabled"
+                     Color="{StaticResource Color_ComboBoxStrokeDisabled}"/>
+    <SolidColorBrush x:Key="Brush_ComboBoxStrokeHover"
+                     Color="{StaticResource Color_ComboBoxStrokeHover}"/>
+    <SolidColorBrush x:Key="Brush_ComboBoxStrokePressed"
+                     Color="{StaticResource Color_ComboBoxStrokePressed}"/>
+
+    <SolidColorBrush x:Key="Brush_ComboBoxBadgeEnabled"
+                     Color="{StaticResource Color_ComboBoxBadgeEnabled}"/>
+    <SolidColorBrush x:Key="Brush_ComboBoxBadgeDisabled"
+                     Color="{StaticResource Color_ComboBoxBadgeDisabled}"/>
+    <SolidColorBrush x:Key="Brush_ComboBoxBadgeHover"
+                     Color="{StaticResource Color_ComboBoxBadgeHover}"/>
+    <SolidColorBrush x:Key="Brush_ComboBoxBadgePressed"
+                     Color="{StaticResource Color_ComboBoxBadgePressed}"/>
+
+
+    <SolidColorBrush x:Key="Brush_ScrollViewerBackground"
+                     Color="{StaticResource Color_ScrollViewerBackground}"/>
+    <SolidColorBrush x:Key="Brush_ScrollViewerScrollBackground"
+                     Color="{StaticResource Color_ScrollViewerScrollBackground}"/>
+
+
+    <SolidColorBrush x:Key="Brush_ListItemEnabled"
+                     Color="{StaticResource Color_ListItemEnabled}"/>
+    <SolidColorBrush x:Key="Brush_ListItemDisabled"
+                     Color="{StaticResource Color_ListItemDisabled}"/>
+    <SolidColorBrush x:Key="Brush_ListItemHover"
+                     Color="{StaticResource Color_ListItemHover}"/>
+    <SolidColorBrush x:Key="Brush_ListItemPressed"
+                     Color="{StaticResource Color_ListItemPressed}"/>
+
+    <SolidColorBrush x:Key="Brush_ListItemStrokeEnabled"
+                     Color="{StaticResource Color_ListItemStrokeEnabled}"/>
+    <SolidColorBrush x:Key="Brush_ListItemStrokeDisabled"
+                     Color="{StaticResource Color_ListItemStrokeDisabled}"/>
+    <SolidColorBrush x:Key="Brush_ListItemStrokeHover"
+                     Color="{StaticResource Color_ListItemStrokeHover}"/>
+    <SolidColorBrush x:Key="Brush_ListItemStrokePressed"
+                     Color="{StaticResource Color_ListItemStrokePressed}"/>
+
+
+    <SolidColorBrush x:Key="Brush_DividerH1W2"
+                     Color="{StaticResource Color_DividerH1W2}"/>
+    <SolidColorBrush x:Key="Brush_DividerH2Top"
+                     Color="{StaticResource Color_DividerH2Top}"/>
+    <SolidColorBrush x:Key="Brush_DividerH2Bottom"
+                     Color="{StaticResource Color_DividerH2Bottom}"/>
+    <SolidColorBrush x:Key="Brush_DividerWhite75"
+                     Color="{StaticResource Color_DividerWhite75}"/>
+
+
+    <SolidColorBrush x:Key="Brush_StatusInfo"
+                     Color="{StaticResource Color_StatusInfo}"/>
+    <SolidColorBrush x:Key="Brush_StatusWarning"
+                     Color="{StaticResource Color_StatusWarning}"/>
+    <SolidColorBrush x:Key="Brush_StatusAlert"
+                     Color="{StaticResource Color_StatusAlert}"/>
+    <SolidColorBrush x:Key="Brush_StatusUnknown"
+                     Color="{StaticResource Color_StatusUnknown}"/>
+
+    <SolidColorBrush x:Key="Brush_StatusInfoLight"
+                     Color="{StaticResource Color_StatusInfoLight}"/>
+
+</ResourceDictionary>

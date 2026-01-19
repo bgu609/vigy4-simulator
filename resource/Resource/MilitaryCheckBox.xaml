@@ -1,0 +1,72 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="MilitaryColor.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="MilitaryCheckBox"
+           TargetType="CheckBox">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        
+                        <Border x:Name="Box"
+                                Width="20"
+                                Height="20"
+                                BorderThickness="1"
+                                BorderBrush="{StaticResource Brush_CheckBoxStrokeEnabled}"
+                                Background="{StaticResource Brush_CheckBoxEnabled}">
+                            <Path x:Name="Checker"
+                                  Data="M2 4.42857L5.63636 9L12 1"
+                                  StrokeThickness="3"
+                                  Stroke="{StaticResource Brush_CheckBoxCheckerEnabled}"
+                                  Visibility="Collapsed"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter TargetName="Checker"
+                                        Property="Visibility"
+                                        Value="Visible"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter TargetName="Box"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_CheckBoxStrokeDisabled}"/>
+                                <Setter TargetName="Box"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_CheckBoxDisabled}"/>
+                                <Setter TargetName="Checker"
+                                        Property="Stroke"
+                                        Value="{StaticResource Brush_CheckBoxCheckerDisabled}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="Box"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_CheckBoxStrokeHover}"/>
+                                <Setter TargetName="Box"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_CheckBoxHover}"/>
+                                <Setter TargetName="Checker"
+                                        Property="Stroke"
+                                        Value="{StaticResource Brush_CheckBoxCheckerHover}"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+</ResourceDictionary>

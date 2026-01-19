@@ -1,0 +1,124 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="MilitaryTypography.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="MilitaryMenuItem"
+           TargetType="MenuItem">
+        <Style.Setters>
+            <Setter Property="Width"
+                    Value="100"/>
+            <Setter Property="Height"
+                    Value="36"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+
+                        <Border x:Name="Panel"
+                                SnapsToDevicePixels="True"
+                                BorderThickness="0"
+                                Background="{StaticResource Brush_MainBackground}">
+                            <Grid>
+
+                                <ContentPresenter x:Name="Content"
+                                                  ContentSource="Header"
+                                                  RecognizesAccessKey="True"
+                                                  TextElement.FontSize="{StaticResource FontSize_BodyTitle}"
+                                                  TextElement.FontWeight="{StaticResource FontWeight_BodyTitle}"
+                                                  TextElement.FontFamily="Noto Sans KR"
+                                                  TextElement.Foreground="{StaticResource Brush_TextListItemEnabled}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+
+                                <Popup x:Name="SubMenu"
+                                       Placement="Bottom"
+                                       AllowsTransparency="True"
+                                       Focusable="False"
+                                       PopupAnimation="Fade"
+                                       IsOpen="{TemplateBinding IsSubmenuOpen}">
+                                    <Border x:Name="SubMenuPanel"
+                                            SnapsToDevicePixels="True"
+                                            BorderThickness="1"
+                                            BorderBrush="{StaticResource Brush_PopupStroke}"
+                                            Background="{StaticResource Brush_PopupBackground}">
+                                        <StackPanel IsItemsHost="True" 
+                                                    KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                    </Border>
+                                </Popup>
+
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsSuspendingPopupAnimation"
+                                     Value="True">
+                                <Setter TargetName="SubMenu"
+                                        Property="PopupAnimation"
+                                        Value="None"/>
+                            </Trigger>
+
+                            <Trigger Property="IsHighlighted"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_MainSecondary}"/>
+                                <Setter TargetName="Content"
+                                        Property="TextElement.Foreground"
+                                        Value="{StaticResource Brush_TextDefault}"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Height"
+                                Value="30"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="MenuItem">
+
+                                    <Border x:Name="Panel"
+                                            Padding="8, 0, 12, 0"
+                                            Background="Transparent">
+                                        <TextBlock x:Name="ItemText"
+                                                   Style="{StaticResource TextBlock_List}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   Text="{TemplateBinding Header}"
+                                                   Foreground="{StaticResource Brush_TextListItemEnabled}"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+
+                                        <Trigger Property="IsHighlighted"
+                                                 Value="True">
+                                            <Setter TargetName="Panel"
+                                                    Property="BorderBrush"
+                                                    Value="{StaticResource Brush_ListItemStrokeHover}"/>
+                                            <Setter TargetName="Panel"
+                                                    Property="Background"
+                                                    Value="{StaticResource Brush_ListItemHover}"/>
+                                            <Setter TargetName="ItemText"
+                                                    Property="Foreground"
+                                                    Value="{StaticResource Brush_TextDefault}"/>
+                                        </Trigger>
+
+                                    </ControlTemplate.Triggers>
+                                    
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+    
+</ResourceDictionary>

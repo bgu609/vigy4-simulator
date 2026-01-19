@@ -1,0 +1,320 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="MilitaryColor.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <s:Double x:Key="FontSize_Headline">15.0</s:Double>
+    <s:Double x:Key="FontSize_BodyTitle">13.0</s:Double>
+    <s:Double x:Key="FontSize_SubTitle">12.0</s:Double>
+    <s:Double x:Key="FontSize_SubTitle_L">24.0</s:Double>
+
+    <s:Double x:Key="FontSize_Label_S">12.0</s:Double>
+    <s:Double x:Key="FontSize_Label_M">14.0</s:Double>
+    <s:Double x:Key="FontSize_List">14.0</s:Double>
+    <s:Double x:Key="FontSize_SubTxt">12.0</s:Double>
+    <s:Double x:Key="FontSize_Txt_S">12.0</s:Double>
+    <s:Double x:Key="FontSize_Txt_M">14.0</s:Double>
+    <s:Double x:Key="FontSize_Txt_L">16.0</s:Double>
+    <s:Double x:Key="FontSize_Txt_XL">32.0</s:Double>
+    <s:Double x:Key="FontSize_Caption_S">8.0</s:Double>
+    <s:Double x:Key="FontSize_Caption_M">14.0</s:Double>
+
+    <s:Double x:Key="FontSize_Tab">14.0</s:Double>
+    <s:Double x:Key="FontSize_TableHeader">12.0</s:Double>
+    <s:Double x:Key="FontSize_TableBody">12.0</s:Double>
+
+    <s:Double x:Key="FontSize_Component_M">14.0</s:Double>
+    <s:Double x:Key="FontSize_Component_L">20.0</s:Double>
+
+    <FontWeight x:Key="FontWeight_Headline">SemiBold</FontWeight>
+    <FontWeight x:Key="FontWeight_BodyTitle">SemiBold</FontWeight>
+    <FontWeight x:Key="FontWeight_SubTitle">SemiBold</FontWeight>
+    <FontWeight x:Key="FontWeight_SubTitle_L">Medium</FontWeight>
+
+    <FontWeight x:Key="FontWeight_Label_S">SemiBold</FontWeight>
+    <FontWeight x:Key="FontWeight_Label_M">Medium</FontWeight>
+    <FontWeight x:Key="FontWeight_List">Medium</FontWeight>
+    <FontWeight x:Key="FontWeight_SubTxt">SemiBold</FontWeight>
+    <FontWeight x:Key="FontWeight_Txt_S">SemiBold</FontWeight>
+    <FontWeight x:Key="FontWeight_Txt_M">Medium</FontWeight>
+    <FontWeight x:Key="FontWeight_Txt_L">SemiBold</FontWeight>
+    <FontWeight x:Key="FontWeight_Txt_XL">Medium</FontWeight>
+    <FontWeight x:Key="FontWeight_Caption_S">Medium</FontWeight>
+    <FontWeight x:Key="FontWeight_Caption_M">Medium</FontWeight>
+
+    <FontWeight x:Key="FontWeight_Tab">Medium</FontWeight>
+    <FontWeight x:Key="FontWeight_TableHeader">Medium</FontWeight>
+    <FontWeight x:Key="FontWeight_TableBody">Medium</FontWeight>
+
+    <FontWeight x:Key="FontWeight_Component_M">Medium</FontWeight>
+    <FontWeight x:Key="FontWeight_Component_L">SemiBold</FontWeight>
+
+    <Style x:Key="TextBlock_Headline"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Headline}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Headline}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_BodyTitle"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_BodyTitle}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_BodyTitle}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_SubTitle"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_SubTitle}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_SubTitle}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_SubTitle_L"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_SubTitle_L}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_SubTitle_L}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Label_S"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Label_S}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Label_S}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Label_M"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Label_M}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Label_M}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_List"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_List}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_List}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_SubTxt"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_SubTxt}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_SubTxt}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Txt_S"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Txt_S}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Txt_S}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Txt_M"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Txt_M}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Txt_M}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Txt_L"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Txt_L}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Txt_L}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Txt_XL"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Txt_XL}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Txt_XL}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Caption_S"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Caption_S}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Caption_S}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Caption_M"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Caption_M}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Caption_M}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Tab"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Tab}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Tab}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_TableHeader"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_TableHeader}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_TableHeader}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_TableBody"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_TableBody}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_TableBody}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Component_M"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Component_M}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Component_M}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlock_Component_L"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Component_L}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Component_L}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+        </Style.Setters>
+    </Style>
+
+</ResourceDictionary>

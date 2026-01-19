@@ -1,0 +1,187 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="MilitaryTypography.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="MilitaryToggleButton"
+           TargetType="ToggleButton">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+
+                        <Border x:Name="Panel"
+                                CornerRadius="13"
+                                BorderThickness="1"
+                                BorderBrush="{StaticResource Brush_ToggleButtonHighlightEnabled}"
+                                Background="{StaticResource Brush_ToggleButtonBackgroundEnabled}">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FFFFFF"
+                                                  Opacity="0.1"
+                                                  BlurRadius="0"
+                                                  ShadowDepth="2"
+                                                  Direction="270"/>
+                            </Border.Effect>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border x:Name="Switch"
+                                        Grid.Column="1"
+                                        CornerRadius="13"
+                                        BorderThickness="1"
+                                        BorderBrush="{StaticResource Brush_ToggleButtonStrokeEnabled}"
+                                        Background="{StaticResource Brush_ToggleButtonEnabled}"/>
+                                <TextBlock x:Name="ContentText"
+                                           Style="{StaticResource TextBlock_Component_M}"
+                                           Grid.Column="0"
+                                           Padding="10, 3"
+                                           Text="{TemplateBinding Content}"
+                                           Foreground="{StaticResource Brush_TextDark}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TagText"
+                                           Style="{StaticResource TextBlock_Component_M}"
+                                           Grid.Column="1"
+                                           Padding="10, 3"
+                                           Text="{TemplateBinding Tag}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter TargetName="Switch"
+                                        Property="Grid.Column"
+                                        Value="0"/>
+                                <Setter TargetName="TagText"
+                                        Property="Foreground"
+                                        Value="{StaticResource Brush_TextDark}"/>
+                                <Setter TargetName="ContentText"
+                                        Property="Foreground"
+                                        Value="{StaticResource Brush_TextDefault}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ToggleButtonHighlightDisabled}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ToggleButtonBackgroundDisabled}"/>
+                                <Setter TargetName="Switch"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ToggleButtonStrokeDisabled}"/>
+                                <Setter TargetName="Switch"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ToggleButtonDisabled}"/>
+                                <Setter TargetName="TagText"
+                                        Property="Opacity"
+                                        Value="0.5"/>
+                                <Setter TargetName="ContentText"
+                                        Property="Opacity"
+                                        Value="0.5"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ToggleButtonHighlightHover}"/>
+                            </Trigger>
+                            
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="MilitaryToggleButton_Multiple"
+           TargetType="ToggleButton">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+
+                        <Border x:Name="Panel"
+                                CornerRadius="3"
+                                BorderThickness="1"
+                                BorderBrush="{StaticResource Brush_ButtonStrokeEnabled}"
+                                Background="{StaticResource Brush_ButtonEnabled}">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FFFFFF"
+                                                  Opacity="0.1"
+                                                  BlurRadius="0"
+                                                  ShadowDepth="2"
+                                                  Direction="270"/>
+                            </Border.Effect>
+                            <TextBlock x:Name="ContentText"
+                                       Style="{StaticResource TextBlock_Component_M}"
+                                       Padding="{TemplateBinding Padding}"
+                                       Text="{TemplateBinding Content}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ButtonStrokeHover}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ButtonHover}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ButtonStrokePressed}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ButtonPressed}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ButtonStrokePressed}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ButtonPressed}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_ButtonStrokeDisabled}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_ButtonDisabled}"/>
+                                <Setter TargetName="ContentText"
+                                        Property="Foreground"
+                                        Value="{StaticResource Brush_TextDark}"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+</ResourceDictionary>

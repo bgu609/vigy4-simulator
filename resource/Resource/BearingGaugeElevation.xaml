@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="Pa5455CmsResource.Resource.BearingGaugeElevation"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Pa5455CmsResource.Resource"
+      mc:Ignorable="d" 
+           d:DesignHeight="150" d:DesignWidth="320"  x:Name="Root">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Canvas x:Name="DialCanvas" Grid.Column="0" Background="Transparent">
+            <!-- Elevation 0° 눈금 -->
+            <!-- Elevation 라벨 -->
+            <Grid Canvas.Top="125" Canvas.Left="120">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Bearing" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Noto Sans KR" FontWeight="Medium" Foreground="{StaticResource Brush_Popup640_TextDisable}"/>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Background="#000000" BorderThickness="1" ClipToBounds="True" Margin="2">
+                        <TextBlock x:Name="BearingDegree" Text="120" FontFamily="Noto Sans KR" FontWeight="Medium" FontSize="12" Width="44" Foreground="{StaticResource Brush_Popup640_TextDisable}" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="0,0,4,0"/>
+                    </Border>
+                    <TextBlock Text="°" Margin="0,0,0,0" Grid.Column="1" FontSize="12"  VerticalAlignment="Center" FontFamily="Noto Sans KR" FontWeight="Medium" Foreground="{StaticResource Brush_Popup640_TextDisable}"/>
+                </Grid>
+            </Grid>
+            <!-- Elevation 0° 눈금 -->
+            <Line X1="148" Y1="75" X2="142" Y2="75" Stroke="White" StrokeThickness="1" Canvas.Left="85" Canvas.Top="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="150"/>
+            <!-- Training 0° 눈금 -->
+            <Line X1="50" Y1="2" X2="50" Y2="8" Stroke="White" StrokeThickness="1" Canvas.Left="110" Canvas.Top="25" Width="100" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <!-- Training 90° 눈금 -->
+            <Line X1="100" Y1="50" X2="91" Y2="50" Stroke="White" StrokeThickness="1" Canvas.Left="110" Canvas.Top="25" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="100"/>
+            <!-- Training 180° 눈금 -->
+            <Line X1="50" Y1="92" X2="50" Y2="100" Stroke="White" StrokeThickness="1" Width="100" Height="100" Canvas.Left="110" Canvas.Top="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <!-- Training 270° 눈금 -->
+            <Line X1="0" Y1="50" X2="8" Y2="50" Stroke="White" StrokeThickness="1" Width="100" Height="100" Canvas.Left="110" Canvas.Top="25"/>
+
+            <!-- 바깥 반원 Arc (Elevation 라벨용 Path) -->
+            <Path Stroke="White" StrokeThickness="2" Fill="Transparent"
+Width="152" Height="152" Canvas.Left="84.5" Canvas.Top="1" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                <Path.Data>
+                    <PathGeometry Figures="M102,5 A75,75,0,0,1,140,112"/>
+                </Path.Data>
+            </Path>
+ 
+            <!-- 선박, 부채꼴 Canvas -->
+            <Canvas x:Name="DialGroup" Width="100" Height="100"
+  RenderTransformOrigin="0.5,0.5" Canvas.Left="110" Canvas.Top="25">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="{Binding BearingAngle, ElementName=Root}" />
+                        <!--<RotateTransform Angle="240" />-->
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+                <!-- 원형 배경 -->
+                <Ellipse Width="100" Height="100" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <!-- 부채꼴 -->
+                <Path Stroke="White" StrokeThickness="1" Opacity="0.5" Fill="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Width="100" Height="100">
+                    <Path.Data>
+                        <PathGeometry Figures="M50,50 L8,74 A49,50,0,0,0,92,74 L50,50 z"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas Width="100" Height="100"
+        Canvas.Left="110" Canvas.Top="25"
+        RenderTransformOrigin="0.5,0.5">
+                <!-- 바늘 (Polygon) -->
+                <Polygon x:Name="Needle" Fill="White" Points="3,0 0,12 0,24 6,24 6,12" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="47" Canvas.Top="38">
+                    <Polygon.RenderTransform>
+                        <RotateTransform Angle="{Binding NeedleAngle, ElementName=Root}" />
+                        <!--<RotateTransform Angle="300" />-->
+                    </Polygon.RenderTransform>
+                </Polygon>
+            </Canvas>
+            <!-- Elevation DountSlice -->
+            <Path x:Name="DonutSlice" Stroke="White" StrokeThickness="2" Width="150" Height="10" Fill="Gray"  RenderTransformOrigin="0.5,0.5" Canvas.Left="85" Canvas.Top="70" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <!--<RotateTransform Angle="{Binding ElevationAngle, ElementName=Root}"/>-->
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Path.RenderTransform>
+                <Path.Data>
+                    <PathGeometry Figures="M147,2 A150,150,0,0,1,147,8 L126,7 A100,100,0,0,0,126,3 z"/>
+                </Path.Data>
+            </Path>
+
+            <!-- Elevation 각도 표시  -->
+            <TextBlock x:Name="ElevationArcDegree" Text="2.3" Foreground="White" Background="Black" FontSize="14" FontWeight="Medium" Width="32" Height="16" Canvas.Left="236" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <!-- Training 각도 표시  -->
+            <TextBlock x:Name="TrainingArcDegree" Text="" Foreground="White" Background="Black" FontSize="14" FontWeight="Medium" Width="44" Height="16" Canvas.Left="138" Canvas.Top="47" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
+            <!-- Training 0도 라벨-->
+            <TextBlock Text="0" Canvas.Left="157" FontSize="8" Canvas.Top="32" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <!-- Training 90도 라벨-->
+            <TextBlock Text="90" Canvas.Left="190" FontSize="8" Canvas.Top="70" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <!-- Training 180도 라벨-->
+            <TextBlock Text="180" Canvas.Left="153" FontSize="8" Canvas.Top="107" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <!-- Training 270도 라벨 -->
+            <TextBlock Text="270" Canvas.Left="120" FontSize="8" Canvas.Top="70" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <!-- Elevation -0도 라벨 -->
+            <TextBlock Text="0" Canvas.Left="221" FontSize="8" Canvas.Top="70" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <!-- Elevation -30도 라벨 -->
+            <TextBlock Text="-30" Canvas.Left="210" FontSize="8" Canvas.Top="105" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <!-- Elevation 70도 라벨 -->
+            <TextBlock Text="70" Canvas.Left="177" FontSize="8" Canvas.Top="5" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <!-- Training 라벨 -->
+            <!-- Elevation 라벨 -->
+        </Canvas>
+
+    </Grid>
+</UserControl>

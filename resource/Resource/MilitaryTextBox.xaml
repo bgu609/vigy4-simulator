@@ -1,0 +1,77 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="MilitaryTypography.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="MilitaryTextBox"
+           TargetType="TextBox">
+        <Style.Setters>
+            <Setter Property="FontSize"
+                    Value="{StaticResource FontSize_Component_M}"/>
+            <Setter Property="FontWeight"
+                    Value="{StaticResource FontWeight_Component_M}"/>
+            <Setter Property="FontFamily"
+                    Value="Noto Sans KR"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource Brush_TextDefault}"/>
+            <Setter Property="CaretBrush"
+                    Value="{StaticResource Brush_TextBoxCaret}"/>
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+
+                        <Border x:Name="Panel"
+                                Padding="5, 3"
+                                BorderThickness="1"
+                                BorderBrush="{StaticResource Brush_TextBoxStrokeEnabled}"
+                                Background="{StaticResource Brush_TextBoxEnabled}">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Padding="0"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_TextBoxStrokeDisabled}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TextBoxDisabled}"/>
+                                <Setter Property="Foreground"
+                                        Value="{StaticResource Brush_TextDark}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_TextBoxStrokeHover}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TextBoxHover}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsKeyboardFocused"
+                                     Value="True">
+                                <Setter TargetName="Panel"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource Brush_TextBoxStrokeAction}"/>
+                                <Setter TargetName="Panel"
+                                        Property="Background"
+                                        Value="{StaticResource Brush_TextBoxAction}"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+</ResourceDictionary>
